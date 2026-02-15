@@ -8,55 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .accent-red { color: #ED4245; }
         .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.4); }
         .text-gradient { background: linear-gradient(to right, #ED4245, #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Notification Animation */
-        #swap-notification {
-            transform: translateX(-120%);
-            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-        #swap-notification.show { transform: translateX(0); }
-
-        input[type="range"] { accent-color: #ED4245; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .pulse-fee { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased">
 
-    <div id="swap-notification" class="fixed bottom-6 left-6 z-[100] glass p-4 rounded-2xl flex items-center gap-4 max-w-sm border-l-4 border-l-red-500 shadow-2xl">
-        <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400">
-            <i class="fa-solid fa-arrow-right-arrow-left"></i>
-        </div>
-        <div>
-            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Recent Success</p>
-            <p id="notification-text" class="text-sm font-semibold">Someone swapped €250.00 → LTC</p>
-            <p id="notification-time" class="text-[9px] text-green-400 font-bold uppercase mt-0.5">Verified 2m ago</p>
-        </div>
-    </div>
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-red-600/10 blur-[120px] -z-10"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-red-900/10 blur-[120px] -z-10"></div>
 
-    <div class="bg-red-600/10 border-b border-red-500/20 py-2 text-center">
-        <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-red-400">
-            <i class="fa-solid fa-circle-check mr-2"></i> Current Reserve: €142,500.00 Available for instant swap
-        </p>
-    </div>
-
-    <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center sticky top-0 z-50 bg-[#050505]/80 backdrop-blur-md">
+    <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
         <div class="flex items-center gap-3 group cursor-pointer">
             <div class="w-12 h-12 bg-red-glow rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-12">
                 <i class="fa-solid fa-bolt-lightning text-white text-xl"></i>
             </div>
-            <span class="text-2xl font-extrabold tracking-tight uppercase">KAAP <span class="accent-red">EXCHANGES</span></span>
+            <span class="text-2xl font-extrabold tracking-tight">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-400">
-            <a href="#features" class="hover:text-white transition">Security</a>
-            <a href="#affiliate" class="hover:text-white transition">Affiliate</a>
-            <a href="#faq" class="hover:text-white transition">FAQ</a>
+            <a href="#" class="hover:text-white transition">Exchange Server</a>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
-            <i class="fa-brands fa-discord"></i> Discord
+            <i class="fa-brands fa-discord"></i> Discord Server
         </a>
     </nav>
 
@@ -69,30 +47,27 @@
                 </span>
                 Live Exchange Dashboard
             </div>
-            <h1 class="text-7xl font-black mb-6 leading-tight uppercase">Trade <span class="text-gradient">Fast.</span></h1>
-            <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">The most reliable exchange service in the scene. High limits, zero KYC, and the best rates guaranteed.</p>
+            <h1 class="text-7xl font-black mb-6 leading-tight">Trade Smarter, <br><span class="text-gradient">Not Harder.</span></h1>
+            <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">The most reliable exchange service in the scene. Instant processing, 24/7 staff, and competitive fees.</p>
             
-            <div class="grid grid-cols-2 gap-6 mb-10">
-                <div class="border-l-2 border-red-500 pl-4">
-                    <p id="total-exchanged-ticker" class="text-3xl font-black accent-red">€842,491.20</p>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em]">Total Exchanged</p>
-                </div>
-                <div class="border-l-2 border-red-500 pl-4">
-                    <p class="text-3xl font-black">5.2k+</p>
-                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-[0.2em]">Total Swaps</p>
-                </div>
-            </div>
-
             <div class="flex flex-col sm:flex-row gap-4">
                 <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all text-center">
                     Start Exchange
                 </a>
+                <div class="flex -space-x-3 items-center ml-4">
+                    <img src="https://ui-avatars.com/api/?name=J&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=S&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=M&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <span class="pl-6 text-sm text-gray-500 font-medium">1000+ Satisfied Clients</span>
+                </div>
             </div>
         </div>
 
         <div class="glass p-10 rounded-[40px] shadow-2xl relative">
-            <h3 class="text-2xl font-extrabold mb-8 flex items-center gap-3 italic">
-                <i class="fa-solid fa-calculator accent-red"></i> QUICK CALCULATOR
+            <div class="absolute -top-6 -right-6 w-24 h-24 bg-red-500/20 blur-3xl"></div>
+            
+            <h3 class="text-2xl font-extrabold mb-8 flex items-center gap-3">
+                <i class="fa-solid fa-calculator accent-red"></i> Fee Calculator
             </h3>
             
             <div class="space-y-8">
@@ -106,8 +81,11 @@
                         <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
                             <option value="paypal">PayPal</option>
                             <option value="crypto">Crypto</option>
-                            <option value="cashapp">CashApp</option>
+                            <option value="tikkie">Tikkie</option>
+                            <option value="skrill">Skrill</option>
                             <option value="revolut">Revolut</option>
+                            <option value="paysafe">PaysafeCard</option>
+                            <option value="bank">Bank Transfer</option>
                         </select>
                     </div>
                 </div>
@@ -117,20 +95,24 @@
                     <div class="relative group">
                         <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
                         <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
-                            <option value="crypto">Crypto</option>
                             <option value="paypal">PayPal</option>
+                            <option value="crypto">Crypto</option>
+                            <option value="tikkie">Tikkie</option>
+                            <option value="skrill">Skrill</option>
                             <option value="revolut">Revolut</option>
+                            <option value="paysafe">PaysafeCard</option>
+                            <option value="bank">Bank Transfer</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center">
-                        <p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Fee Rate</p>
+                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                        <p class="text-xs font-bold text-gray-500 uppercase mb-1">Exchange Rate</p>
                         <p id="feeRateDisplay" class="text-xl font-black text-green-400">7%</p>
                     </div>
-                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center">
-                        <p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Est. Fee</p>
+                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                        <p class="text-xs font-bold text-gray-500 uppercase mb-1">Total Fee</p>
                         <p id="feeCostDisplay" class="text-xl font-black text-red-400">€7.00</p>
                     </div>
                 </div>
@@ -138,110 +120,124 @@
         </div>
     </section>
 
-    <section id="affiliate" class="max-w-7xl mx-auto px-6 py-24 bg-red-500/5 rounded-[60px]">
-        <div class="grid lg:grid-cols-2 gap-16 items-center px-12">
+    <section class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 pb-20">
+        <div class="glass p-8 rounded-3xl flex items-center gap-6">
+            <i class="fa-solid fa-shield-halved text-4xl accent-red"></i>
             <div>
-                <h2 class="text-4xl font-black mb-6 uppercase tracking-tight">Partner Program</h2>
-                <p class="text-gray-400 text-lg mb-8 leading-relaxed">Refer your friends and earn <span class="text-white font-bold">1% commission</span> of every transaction they make. For life.</p>
-                <ul class="space-y-3">
-                    <li class="flex items-center gap-3 text-sm text-gray-300 font-bold uppercase tracking-widest"><i class="fa-solid fa-check accent-red"></i> Instant Crypto Payouts</li>
-                    <li class="flex items-center gap-3 text-sm text-gray-300 font-bold uppercase tracking-widest"><i class="fa-solid fa-check accent-red"></i> Custom Referral Link</li>
-                </ul>
+                <h4 class="font-bold text-lg">Safe & Secure</h4>
+                <p class="text-sm text-gray-400">Fully encrypted transactions.</p>
             </div>
-            <div class="glass p-8 rounded-3xl border border-white/5">
-                <p class="text-xs font-bold text-gray-500 uppercase mb-8 tracking-widest text-center">Earnings Estimator</p>
-                <div class="space-y-8">
-                    <div>
-                        <div class="flex justify-between text-xs font-bold mb-4">
-                            <span>Monthly Referral Volume</span>
-                            <span class="accent-red" id="volLabel">€5,000</span>
-                        </div>
-                        <input type="range" id="affSlider" min="500" max="50000" step="500" value="5000" class="w-full">
-                    </div>
-                    <div class="text-center p-6 bg-red-500/10 rounded-2xl border border-red-500/20">
-                        <p class="text-xs text-gray-400 mb-1 font-bold uppercase tracking-widest">Monthly Passive Income</p>
-                        <p class="text-5xl font-black accent-red" id="affProfit">€50.00</p>
-                    </div>
-                </div>
+        </div>
+        <div class="glass p-8 rounded-3xl flex items-center gap-6">
+            <i class="fa-solid fa-clock text-4xl accent-red"></i>
+            <div>
+                <h4 class="font-bold text-lg">Instant Delivery</h4>
+                <p class="text-sm text-gray-400">Average time: 5-10 minutes.</p>
+            </div>
+        </div>
+        <div class="glass p-8 rounded-3xl flex items-center gap-6">
+            <i class="fa-solid fa-headset text-4xl accent-red"></i>
+            <div>
+                <h4 class="font-bold text-lg">24/7 Support</h4>
+                <p class="text-sm text-gray-400">Always available on Discord.</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-gray-600 text-[10px] font-bold uppercase tracking-widest">
-        &copy; 2026 Kaap Exchanges &bull; Trusted by 5,000+ Users
-    </footer>
-
     <script>
-        // --- CALC LOGIC ---
-        const routeFees = { 'paypal|crypto': 0.08, 'crypto|paypal': 0.03, 'revolut|crypto': 0.05 };
+        // Data derived from bot.py fee structure
+        const routeFees = {
+            'paypal|crypto': 0.07,
+            'paypal|tikkie': 0.05,
+            'paypal|paysafe': 0.10,
+            'paypal|skrill': 0.10,
+            'paypal|revolut': 0.05,
+            'paypal|bank': 0.05,
+            'paypal|paypal': 0.05,
+            
+            'tikkie|crypto': 0.07,
+            'tikkie|paypal': 0.05,
+            'tikkie|paysafe': 0.10,
+            'tikkie|skrill': 0.10,
+            'tikkie|revolut': 0.05,
+            'tikkie|bank': 0.05,
+            'tikkie|tikkie': 0.05,
+            
+            'crypto|paypal': 0.02,
+            'crypto|tikkie': 0.02,
+            'crypto|bank': 0.02,
+            'crypto|revolut': 0.02,
+            'crypto|paysafe': 0.02,
+            'crypto|skrill': 0.02,
+            'crypto|crypto': 0.05,
+
+            'bank|paypal': 0.05,
+            'bank|crypto': 0.07,
+            'bank|tikkie': 0.05,
+            'bank|revolut': 0.05,
+            'bank|paysafe': 0.10,
+            'bank|skrill': 0.10,
+            'bank|bank': 0.10,
+
+            'skrill|paypal': 0.10,
+            'skrill|crypto': 0.10,
+            'skrill|tikkie': 0.10,
+            'skrill|revolut': 0.10,
+            'skrill|bank': 0.10,
+            'skrill|paysafe': 0.10,
+            'skrill|skrill': 0.10,
+
+            'paysafe|paypal': 0.10,
+            'paysafe|crypto': 0.10,
+            'paysafe|tikkie': 0.10,
+            'paysafe|revolut': 0.10,
+            'paysafe|skrill': 0.10,
+            'paysafe|bank': 0.10,
+            'paysafe|paysafe': 0.10,
+    
+            'revolut|paypal': 0.05,
+            'revolut|crypto': 0.07,
+            'revolut|tikkie': 0.05,
+            'revolut|skrill': 0.10,
+            'revolut|paysafe': 0.10,
+            'revolut|bank': 0.05,
+            'revolut|revolut': 0.05,
+
+        };
+
         const MIN_FEE = 0.50;
 
         function updateExchange() {
             const sendAmt = parseFloat(document.getElementById('sendAmount').value) || 0;
             const sendMethod = document.getElementById('sendMethod').value;
             const receiveMethod = document.getElementById('receiveMethod').value;
+
             const routeKey = `${sendMethod}|${receiveMethod}`;
-            let feePercent = routeFees[routeKey] || 0.07;
+            const feePercent = routeFees[routeKey] || routeFees['default'];
             
             let calculatedFee = sendAmt * feePercent;
+            
+            // Logic from bot.py: If NOT sending crypto, apply 0.50 min fee
             const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
-            if (sendMethod !== 'crypto') calculatedFee = Math.max(calculatedFee, MIN_FEE);
+            if (sendMethod !== 'crypto') {
+                calculatedFee = Math.max(calculatedFee, MIN_FEE);
+            }
 
             const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
+
+            // Update UI
             document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
             document.getElementById('feeRateDisplay').innerText = `${(feePercent * 100).toFixed(0)}%`;
             document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
             document.getElementById('min-fee-alert').style.display = isMinFeeApplied ? 'block' : 'none';
         }
 
-        // --- TOTAL VOLUME TICKER ---
-        let totalVolume = 842491.20;
-        function tickVolume() {
-            // Randomly increase volume between €10 and €150 every few seconds
-            const increment = (Math.random() * 140) + 10;
-            totalVolume += increment;
-            document.getElementById('total-exchanged-ticker').innerText = `€${totalVolume.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            
-            setTimeout(tickVolume, (Math.random() * 5000) + 3000); // Ticks every 3-8 seconds
-        }
-        tickVolume();
-
-        // --- RECENT SWAP NOTIFICATIONS ---
-        const countries = ["Germany", "United Kingdom", "France", "USA", "Poland", "Netherlands", "Sweden"];
-        const methods = ["PayPal → LTC", "CashApp → BTC", "Revolut → LTC", "PayPal → ETH", "LTC → PayPal"];
-        const swapBox = document.getElementById('swap-notification');
-        const swapText = document.getElementById('notification-text');
-        const swapTime = document.getElementById('notification-time');
-
-        function showSwap() {
-            const country = countries[Math.floor(Math.random() * countries.length)];
-            const method = methods[Math.floor(Math.random() * methods.length)];
-            const amount = (Math.random() * 500 + 50).toFixed(2);
-            
-            swapText.innerText = `Someone from ${country} swapped €${amount} ${method}`;
-            swapTime.innerText = `Verified Just Now`;
-            
-            swapBox.classList.add('show');
-            
-            setTimeout(() => {
-                swapBox.classList.remove('show');
-            }, 5000); // Show for 5 seconds
-
-            setTimeout(showSwap, (Math.random() * 20000) + 15000); // Repeat every 15-35 seconds
-        }
-        
-        // Initial delay before first popup
-        setTimeout(showSwap, 4000);
-
-        // --- AFFILIATE SLIDER ---
-        const affSlider = document.getElementById('affSlider');
-        affSlider?.addEventListener('input', (e) => {
-            const val = e.target.value;
-            document.getElementById('volLabel').innerText = `€ ${parseInt(val).toLocaleString()}`;
-            document.getElementById('affProfit').innerText = `€ ${(val * 0.01).toFixed(2)}`;
+        // Listen for changes
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('input', updateExchange);
         });
 
-        document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
+        // Initial Calculation
         updateExchange();
     </script>
 </body>
