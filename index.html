@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaap Exchanges | The Gold Standard</title>
+    <title>Kaap Exchanges | Premium Asset Liquidity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        :root { --accent: #ED4245; }
+        body { background: #030303; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .text-gradient { background: linear-gradient(135deg, #fff 30%, #ED4245 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-primary { background: #ED4245; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 12px; font-weight: 700; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(237, 66, 69, 0.4); }
-        .liquidity-bar { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.1); overflow: hidden; }
+        .text-gradient { background: linear-gradient(135deg, #fff 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-primary { background: var(--accent); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 20px rgba(237, 66, 69, 0.2); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(237, 66, 69, 0.4); background: #ff4d50; }
+        .liquidity-bar { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.05); overflow: hidden; }
         .liquidity-fill { height: 100%; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        /* Live Feed Animations */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); background: rgba(237, 66, 69, 0.1); }
-            to { opacity: 1; transform: translateY(0); background: transparent; }
-        }
-        .row-animate { animation: slideIn 0.6s ease-out forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .row-animate { animation: slideIn 0.5s ease-out forwards; }
     </style>
 </head>
 <body class="antialiased">
@@ -34,9 +30,9 @@
             </div>
             <div class="hidden md:flex gap-8 items-center">
                 <a href="#stats" class="text-sm font-bold text-gray-400 hover:text-white transition">Reserves</a>
-                <a href="#faq" class="text-sm font-bold text-gray-400 hover:text-white transition">FAQ</a>
                 <a href="#live-feed" class="text-sm font-bold text-gray-400 hover:text-white transition">Live Feed</a>
-                <button onclick="toggleOnboarding()" class="btn-primary px-6 py-2.5 text-sm">Start Exchange</button>
+                <a href="#faq" class="text-sm font-bold text-gray-400 hover:text-white transition">FAQ</a>
+                <button onclick="toggleOnboarding()" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-bold">Start Exchange</button>
             </div>
         </div>
     </nav>
@@ -45,55 +41,73 @@
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div>
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-bold text-red-400 uppercase tracking-widest mb-6">
-                    <i class="fa-solid fa-bolt"></i> Instant Liquidity 2.0
+                    <i class="fa-solid fa-shield-check"></i> Institutional Grade Liquidity
                 </div>
-                <h1 class="text-6xl md:text-7xl font-black mb-8 leading-tight">Elite Asset <br><span class="text-gradient">Liquidity.</span></h1>
-                <p class="text-gray-400 text-lg mb-10 max-w-md">Seamlessly bridge your PayPal, Crypto, and Bank assets with institutional-grade security.</p>
+                <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter">
+                    Bridge Your <br><span class="text-gradient">Wealth.</span>
+                </h1>
+                <p class="text-gray-400 text-lg mb-10 max-w-md">Kaap Exchanges provides a secure, private bridge between PayPal, Crypto, and Banking systems with 24/7 Discord support.</p>
                 
                 <div class="glass p-6 rounded-3xl border-red-500/20 bg-red-500/5 flex items-center justify-between gap-4">
                     <div>
-                        <p class="text-xs font-bold text-red-400 uppercase">Partner Program</p>
+                        <p class="text-xs font-bold text-red-400 uppercase tracking-widest">Partner Program</p>
                         <p class="text-sm text-gray-300">Earn 1% on every swap from your referrals.</p>
                     </div>
-                    <a href="https://discord.gg/kaapp" class="px-4 py-2 bg-white text-black rounded-xl text-xs font-bold whitespace-nowrap hover:bg-gray-200 transition">Join Now</a>
+                    <a href="https://discord.gg/kaapp" target="_blank" class="px-5 py-2.5 bg-white text-black rounded-xl text-xs font-bold hover:bg-gray-200 transition whitespace-nowrap">Join Program</a>
                 </div>
             </div>
 
-            <div class="glass p-8 rounded-[40px] border-white/10 shadow-2xl">
-                <div class="space-y-4">
-                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase mb-2 block">You Send</label>
-                        <div class="flex items-center gap-4">
-                            <input type="number" id="sendAmount" value="100" class="bg-transparent text-3xl font-bold w-full focus:outline-none">
-                            <select id="sendMethod" class="bg-white/10 rounded-lg px-3 py-2 text-sm font-bold outline-none border border-white/10">
-                                <option value="paypal" selected>PayPal</option>
-                                <option value="crypto">Crypto</option>
-                                <option value="revolut">Revolut</option>
-                            </select>
+            <div class="glass p-8 md:p-10 rounded-[40px] border-white/10 shadow-2xl">
+                <div class="space-y-8">
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Send</label>
+                            <span class="text-xs text-red-400 font-bold" id="min-fee-alert" style="display:none;">€0.50 Min. Fee Applied</span>
                         </div>
-                    </div>
-                    <div class="flex justify-center -my-6 relative z-10">
-                        <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center border-4 border-[#050505] shadow-lg"><i class="fa-solid fa-arrow-down text-sm"></i></div>
-                    </div>
-                    <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase mb-2 block">You Receive (Estimated)</label>
-                        <div class="flex items-center gap-4">
-                            <input type="text" id="receiveAmount" readonly class="bg-transparent text-3xl font-bold w-full text-red-500 outline-none">
-                            <select id="receiveMethod" class="bg-white/10 rounded-lg px-3 py-2 text-sm font-bold outline-none border border-white/10">
-                                <option value="crypto" selected>Crypto</option>
+                        <div class="relative group">
+                            <input type="number" id="sendAmount" value="100.00" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black focus:outline-none focus:border-red-500/50 transition-all">
+                            <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
                                 <option value="paypal">PayPal</option>
+                                <option value="crypto">Crypto</option>
+                                <option value="tikkie">Tikkie</option>
+                                <option value="skrill">Skrill</option>
                                 <option value="revolut">Revolut</option>
+                                <option value="paysafe">PaysafeCard</option>
+                                <option value="bank">Bank Transfer</option>
                             </select>
                         </div>
                     </div>
+
+                    <div class="space-y-3">
+                        <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Receive</label>
+                        <div class="relative group">
+                            <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
+                            <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
+                                <option value="crypto">Crypto</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="tikkie">Tikkie</option>
+                                <option value="skrill">Skrill</option>
+                                <option value="revolut">Revolut</option>
+                                <option value="paysafe">PaysafeCard</option>
+                                <option value="bank">Bank Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Exchange Rate</p>
+                            <p id="feeRateDisplay" class="text-xl font-black text-green-400">7%</p>
+                        </div>
+                        <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Total Fee</p>
+                            <p id="feeCostDisplay" class="text-xl font-black text-red-400">€7.00</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="mt-6 flex justify-between text-xs font-bold text-gray-500 px-2 uppercase tracking-tighter">
-                    <span>Service Fee: <span id="feeRateDisplay" class="text-white">7%</span></span>
-                    <span>Min Fee: <span class="text-white">€0.50</span></span>
-                </div>
-                
-                <button onclick="toggleOnboarding()" class="w-full btn-primary mt-6 py-4 text-lg">Exchange Assets</button>
+                <button onclick="toggleOnboarding()" class="w-full btn-primary mt-8 py-5 rounded-2xl font-black text-lg uppercase tracking-widest">
+                    Continue Exchange
+                </button>
             </div>
         </div>
     </header>
@@ -103,55 +117,46 @@
             <div class="glass p-8 rounded-3xl border-white/10">
                 <p class="text-[10px] font-bold text-gray-500 uppercase mb-4">PayPal Liquidity</p>
                 <div class="flex justify-between items-end mb-2">
-                    <span class="text-xl font-bold">€42,481</span>
-                    <span class="text-[10px] text-green-500 font-bold">Optimal</span>
+                    <span class="text-xl font-bold text-white">€42,481</span>
+                    <span class="text-[10px] text-green-500 font-bold uppercase">Optimal</span>
                 </div>
                 <div class="liquidity-bar"><div class="liquidity-fill bg-blue-500" style="width: 85%"></div></div>
             </div>
             <div class="glass p-8 rounded-3xl border-white/10">
                 <p class="text-[10px] font-bold text-gray-500 uppercase mb-4">Crypto Reserves</p>
                 <div class="flex justify-between items-end mb-2">
-                    <span class="text-xl font-bold">12.1 BTC</span>
-                    <span class="text-[10px] text-yellow-500 font-bold">Stable</span>
+                    <span class="text-xl font-bold text-white">12.1 BTC</span>
+                    <span class="text-[10px] text-yellow-500 font-bold uppercase">Stable</span>
                 </div>
                 <div class="liquidity-bar"><div class="liquidity-fill bg-orange-500" style="width: 65%"></div></div>
             </div>
             <div class="glass p-8 rounded-3xl border-white/10 text-center">
                 <p class="text-[10px] font-bold text-gray-500 uppercase mb-4">Solvency Ratio</p>
                 <p class="text-3xl font-black text-green-500">1:1.04</p>
-                <p class="text-[10px] text-gray-500 mt-2 italic">Audited Hourly</p>
+                <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-tighter">Verified Reserves</p>
             </div>
             <div class="glass p-8 rounded-3xl border-white/10 text-center">
-                <p class="text-[10px] font-bold text-gray-500 uppercase mb-4">Total Swaps</p>
-                <p class="text-3xl font-black">14,291</p>
-                <p class="text-[10px] text-gray-500 mt-2">Certified Success</p>
+                <p class="text-[10px] font-bold text-gray-500 uppercase mb-4">Live Tickets</p>
+                <p class="text-3xl font-black">14</p>
+                <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-tighter">Active Staff</p>
             </div>
         </div>
     </section>
 
-    <section id="live-feed" class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-            <div>
-                <h2 class="text-4xl font-black">Latest Exchanges</h2>
-                <p class="text-gray-400 mt-2">Real-time processing across our global network.</p>
-            </div>
-            <div class="flex gap-4">
-                <div class="text-right">
-                    <p class="text-[10px] font-bold text-gray-500 uppercase">24h Volume</p>
-                    <p class="text-xl font-mono font-bold text-white">€142,502</p>
-                </div>
-            </div>
+    <section id="live-feed" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="mb-12">
+            <h2 class="text-4xl font-black mb-2">Network Activity</h2>
+            <p class="text-gray-400">Live transaction stream across the Kaap infrastructure.</p>
         </div>
         <div class="glass rounded-[32px] overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-white/5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-[10px] font-black text-gray-500 uppercase tracking-widest">
                         <tr>
-                            <th class="px-8 py-5">Transaction ID</th>
+                            <th class="px-8 py-5">TXID</th>
                             <th class="px-8 py-5">Pair</th>
                             <th class="px-8 py-5">Amount</th>
                             <th class="px-8 py-5">Status</th>
-                            <th class="px-8 py-5 text-right">Time</th>
                         </tr>
                     </thead>
                     <tbody id="transaction-body" class="divide-y divide-white/5 font-medium"></tbody>
@@ -161,79 +166,86 @@
     </section>
 
     <section id="faq" class="max-w-4xl mx-auto px-6 py-24">
-        <h2 class="text-4xl font-black text-center mb-12">Transparency & Security</h2>
+        <h2 class="text-4xl font-black text-center mb-12">Support & Safety</h2>
         <div class="relative mb-8">
             <i class="fa-solid fa-search absolute left-5 top-1/2 -translate-y-1/2 text-gray-500"></i>
-            <input type="text" id="faqSearch" onkeyup="searchFAQ()" placeholder="Search security, fees, or timing..." class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 focus:border-red-500 transition outline-none">
+            <input type="text" id="faqSearch" onkeyup="searchFAQ()" placeholder="Search terms (e.g. 'fees', 'time', 'security')..." class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 focus:border-red-500 transition outline-none">
         </div>
-        <div id="faqList" class="space-y-4">
-            <div class="faq-item glass p-6 rounded-2xl cursor-pointer hover:bg-white/[0.04] transition group">
+        <div class="space-y-4" id="faqList">
+            <div class="faq-item glass p-6 rounded-2xl cursor-pointer hover:bg-white/[0.04]">
                 <div class="flex justify-between items-center font-bold">
-                    <span>How long does an exchange take?</span>
-                    <i class="fa-solid fa-plus text-xs text-red-500 group-hover:rotate-90 transition-transform"></i>
+                    <span>What is the average delivery time?</span>
+                    <i class="fa-solid fa-plus text-xs text-red-500"></i>
                 </div>
-                <p class="faq-answer hidden mt-4 text-gray-400 text-sm leading-relaxed">Typically 5-15 minutes once we receive your funds. Bank transfers may vary by region.</p>
+                <p class="hidden mt-4 text-gray-400 text-sm">Most exchanges are finalized within 5-10 minutes. Bank transfers depend on regional SEPA/Swift processing times.</p>
             </div>
-            <div class="faq-item glass p-6 rounded-2xl cursor-pointer hover:bg-white/[0.04] transition group">
+            <div class="faq-item glass p-6 rounded-2xl cursor-pointer hover:bg-white/[0.04]">
                 <div class="flex justify-between items-center font-bold">
-                    <span>Is this service automated or manual?</span>
-                    <i class="fa-solid fa-plus text-xs text-red-500 group-hover:rotate-90 transition-transform"></i>
+                    <span>How do I start my first exchange?</span>
+                    <i class="fa-solid fa-plus text-xs text-red-500"></i>
                 </div>
-                <p class="faq-answer hidden mt-4 text-gray-400 text-sm leading-relaxed">We use a hybrid system. Verification is automated, but a staff member oversees the final disbursement to ensure total security.</p>
+                <p class="hidden mt-4 text-gray-400 text-sm">Use the calculator above, click continue, and join our Discord. Type /exchange to open a secure staff ticket.</p>
             </div>
         </div>
     </section>
 
-    <div id="onboardingModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/90 backdrop-blur-sm">
+    <div id="onboardingModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/95 backdrop-blur-md">
         <div class="glass max-w-lg w-full rounded-[40px] p-10 relative">
             <button onclick="toggleOnboarding()" class="absolute top-8 right-8 text-gray-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             <div id="step1">
                 <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6"><i class="fa-solid fa-shield-halved text-red-500 text-2xl"></i></div>
-                <h3 class="text-2xl font-black mb-4">KYC Compliance</h3>
-                <p class="text-gray-400 mb-8">To prevent fraud, we only accept funds from personal accounts belonging to you. Business account transfers require extra verification.</p>
-                <button onclick="nextStep(2)" class="w-full btn-primary py-4">Accept & Continue</button>
+                <h3 class="text-2xl font-black mb-4">Security Notice</h3>
+                <p class="text-gray-400 mb-8">To prevent fraud, we only accept funds from personal accounts belonging to you. Third-party payments will be rejected.</p>
+                <button onclick="nextStep(2)" class="w-full btn-primary py-4 rounded-2xl font-bold uppercase tracking-widest">Agree & Continue</button>
             </div>
             <div id="step2" class="hidden text-center">
                 <div class="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 mx-auto"><i class="fa-solid fa-comments text-green-500 text-2xl"></i></div>
-                <h3 class="text-2xl font-black mb-4">Finish on Discord</h3>
-                <p class="text-gray-400 mb-8">Our tickets are managed via Discord for real-time support. Click below to open your ticket instantly.</p>
-                <a href="https://discord.gg/kaapp" target="_blank" class="block w-full btn-primary py-4">Join Discord & Swap</a>
+                <h3 class="text-2xl font-black mb-4">Move to Discord</h3>
+                <p class="text-gray-400 mb-8">All transactions are managed through our secure Discord ticketing system for your privacy and safety.</p>
+                <a href="https://discord.gg/kaapp" target="_blank" class="block w-full btn-primary py-4 rounded-2xl font-bold uppercase tracking-widest">Open Discord Ticket</a>
             </div>
         </div>
     </div>
 
-    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p class="text-xs text-gray-500 uppercase font-bold tracking-widest">&copy; 2026 Kaap Exchanges. All Rights Reserved.</p>
-        <div class="flex gap-6">
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-discord"></i></a>
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
-        </div>
-    </footer>
-
     <script>
-        // Modal & Step Logic
+        const routeFees = {
+            'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
+            'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
+            'crypto|paypal': 0.02, 'crypto|tikkie': 0.02, 'crypto|bank': 0.02, 'crypto|revolut': 0.02, 'crypto|paysafe': 0.02, 'crypto|skrill': 0.02, 'crypto|crypto': 0.05,
+            'bank|paypal': 0.05, 'bank|crypto': 0.07, 'bank|tikkie': 0.05, 'bank|revolut': 0.05, 'bank|paysafe': 0.10, 'bank|skrill': 0.10, 'bank|bank': 0.10,
+            'skrill|paypal': 0.10, 'skrill|crypto': 0.10, 'skrill|tikkie': 0.10, 'skrill|revolut': 0.10, 'skrill|bank': 0.10, 'skrill|paysafe': 0.10, 'skrill|skrill': 0.10,
+            'paysafe|paypal': 0.10, 'paysafe|crypto': 0.10, 'paysafe|tikkie': 0.10, 'paysafe|revolut': 0.10, 'paysafe|skrill': 0.10, 'paysafe|bank': 0.10, 'paysafe|paysafe': 0.10,
+            'revolut|paypal': 0.05, 'revolut|crypto': 0.07, 'revolut|tikkie': 0.05, 'revolut|skrill': 0.10, 'revolut|paysafe': 0.10, 'revolut|bank': 0.05, 'revolut|revolut': 0.05,
+            'default': 0.08
+        };
+
+        const MIN_FEE = 0.50;
+
+        function updateExchange() {
+            const sendAmt = parseFloat(document.getElementById('sendAmount').value) || 0;
+            const sendMethod = document.getElementById('sendMethod').value;
+            const receiveMethod = document.getElementById('receiveMethod').value;
+            const routeKey = `${sendMethod}|${receiveMethod}`;
+            const feePercent = routeFees[routeKey] || routeFees['default'];
+            
+            let calculatedFee = sendAmt * feePercent;
+            const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
+            if (sendMethod !== 'crypto') calculatedFee = Math.max(calculatedFee, MIN_FEE);
+
+            const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
+
+            document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
+            document.getElementById('feeRateDisplay').innerText = `${(feePercent * 100).toFixed(0)}%`;
+            document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
+            document.getElementById('min-fee-alert').style.display = isMinFeeApplied ? 'block' : 'none';
+        }
+
         function toggleOnboarding() { document.getElementById('onboardingModal').classList.toggle('hidden'); }
         function nextStep(step) {
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
 
-        // Calculator Logic
-        const routeFees = { 'paypal|crypto': 0.07, 'crypto|paypal': 0.05, 'revolut|crypto': 0.06, 'default': 0.08 };
-        function updateExchange() {
-            const sendAmt = parseFloat(document.getElementById('sendAmount').value) || 0;
-            const route = `${document.getElementById('sendMethod').value}|${document.getElementById('receiveMethod').value}`;
-            const fee = routeFees[route] || routeFees['default'];
-            const calculated = Math.max(sendAmt * (1 - fee), 0);
-            
-            document.getElementById('receiveAmount').value = `€ ${calculated.toFixed(2)}`;
-            document.getElementById('feeRateDisplay').innerText = `${(fee * 100).toFixed(0)}%`;
-        }
-        document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
-        updateExchange();
-
-        // FAQ Logic
         function searchFAQ() {
             let input = document.getElementById('faqSearch').value.toLowerCase();
             let items = document.getElementsByClassName('faq-item');
@@ -241,33 +253,36 @@
                 item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
             });
         }
+
         document.querySelectorAll('.faq-item').forEach(item => {
-            item.addEventListener('click', () => item.querySelector('.faq-answer').classList.toggle('hidden'));
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('p');
+                answer.classList.toggle('hidden');
+            });
         });
 
         // Live Feed Generator
-        const methods = ['PayPal', 'BTC', 'ETH', 'LTC', 'Revolut', 'SEPA'];
-        function generateTransaction() {
+        const pairs = ['PayPal', 'BTC', 'ETH', 'Revolut', 'SEPA', 'Tikkie'];
+        function addRow() {
             const id = 'KX-' + Math.random().toString(36).substr(2, 7).toUpperCase();
-            const from = methods[Math.floor(Math.random() * methods.length)];
-            const to = methods.filter(m => m !== from)[Math.floor(Math.random() * (methods.length - 1))];
-            const amount = (Math.random() * 800 + 20).toFixed(2);
-            
+            const from = pairs[Math.floor(Math.random() * pairs.length)];
+            const to = pairs.filter(p => p !== from)[Math.floor(Math.random() * (pairs.length-1))];
+            const amount = (Math.random() * 500 + 10).toFixed(2);
             const row = document.createElement('tr');
-            row.className = 'row-animate hover:bg-white/[0.02] transition-colors';
-            row.innerHTML = `
-                <td class="px-8 py-5 font-mono text-xs text-gray-500">${id}</td>
-                <td class="px-8 py-5 flex items-center gap-2"><span class="text-white">${from}</span> <i class="fa-solid fa-arrow-right text-[10px] text-gray-600"></i> <span class="text-red-400">${to}</span></td>
-                <td class="px-8 py-5 font-bold">€${amount}</td>
-                <td class="px-8 py-5"><span class="px-3 py-1 rounded-full text-[10px] font-bold bg-green-500/10 text-green-500 uppercase">Completed</span></td>
-                <td class="px-8 py-5 text-right text-xs text-gray-500">Just now</td>
-            `;
+            row.className = 'row-animate';
+            row.innerHTML = `<td class="px-8 py-5 font-mono text-xs text-gray-500">${id}</td>
+                             <td class="px-8 py-5 text-sm">${from} <i class="fa-solid fa-arrow-right mx-2 opacity-30"></i> <span class="text-red-400">${to}</span></td>
+                             <td class="px-8 py-5 font-bold">€${amount}</td>
+                             <td class="px-8 py-5"><span class="px-3 py-1 rounded-full text-[9px] font-black bg-green-500/10 text-green-500 uppercase">Success</span></td>`;
             const tbody = document.getElementById('transaction-body');
             tbody.insertBefore(row, tbody.firstChild);
-            if (tbody.children.length > 6) tbody.removeChild(tbody.lastChild);
+            if(tbody.children.length > 5) tbody.removeChild(tbody.lastChild);
         }
-        setInterval(generateTransaction, 5000);
-        for(let i=0; i<4; i++) generateTransaction();
+        setInterval(addRow, 6000);
+        for(let i=0; i<5; i++) addRow();
+
+        document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
+        updateExchange();
     </script>
 </body>
 </html>
