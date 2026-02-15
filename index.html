@@ -31,9 +31,7 @@
             <span class="text-2xl font-extrabold tracking-tight">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-400">
-            <a href="#" class="hover:text-white transition">Features</a>
-            <a href="#" class="hover:text-white transition">Rates</a>
-            <a href="#" class="hover:text-white transition">Reviews</a>
+            <a href="#" class="hover:text-white transition">Exchange Server</a>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
             <i class="fa-brands fa-discord"></i> Discord Server
@@ -97,7 +95,7 @@
                     <div class="relative group">
                         <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
                         <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
-                            <option value="crypto">Crypto (LTC)</option>
+                            <option value="crypto">Crypto</option>
                             <option value="paypal">PayPal</option>
                             <option value="tikkie">Tikkie</option>
                             <option value="skrill">Skrill</option>
@@ -158,18 +156,46 @@
             
             'tikkie|crypto': 0.07,
             'tikkie|paypal': 0.05,
+            'tikkie|paysafe': 0.10,
+            'tikkie|skrill': 0.10,
+            'tikkie|revolut': 0.05,
             'tikkie|bank': 0.05,
             
             'crypto|paypal': 0.02,
             'crypto|tikkie': 0.02,
             'crypto|bank': 0.02,
             'crypto|revolut': 0.02,
-            
-            'paysafe|crypto': 0.10,
-            'skrill|crypto': 0.10,
-            'revolut|crypto': 0.07,
+            'crypto|paysafe': 0.02,
+            'crypto|skrill': 0.02,
+
+            'bank|paypal': 0.05,
             'bank|crypto': 0.07,
-            'default': 0.05
+            'bank|tikkie': 0.05,
+            'bank|revolut': 0.05,
+            'bank|paysafe': 0.10,
+            'bank|skrill': 0.10,
+
+            'skrill|paypal': 0.10,
+            'skrill|crypto': 0.10,
+            'skrill|tikkie': 0.10,
+            'skrill|revolut': 0.10,
+            'skrill|bank': 0.10,
+            'skrill|paysafe': 0.10,
+
+            'paysafe|paypal': 0.10,
+            'paysafe|crypto': 0.10,
+            'paysafe|tikkie': 0.10,
+            'paysafe|revolut': 0.10,
+            'paysafe|skrill': 0.10,
+            'paysafe|bank': 0.10,
+    
+            'revolut|paypal': 0.05,
+            'revolut|crypto': 0.07,
+            'revolut|tikkie': 0.05,
+            'revolut|skrill': 0.10,
+            'revolut|paysafe': 0.10,
+            'revolut|bank': 0.05,
+
         };
 
         const MIN_FEE = 0.50;
