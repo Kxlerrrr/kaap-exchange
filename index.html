@@ -10,7 +10,7 @@
     <style>
         html { scroll-behavior: smooth; }
         
-        /* Custom Scrollbar (Visual & UX Polish) */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #ED4245; border-radius: 10px; }
@@ -18,6 +18,7 @@
 
         body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
         
+        /* Light Mode Overrides */
         body.light-mode { background: #f9fafb; color: #111827; }
         body.light-mode .glass { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.1); color: #111827; }
         body.light-mode .text-gray-400 { color: #4b5563; }
@@ -47,6 +48,7 @@
         .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.4); }
         .text-gradient { background: linear-gradient(to right, #ED4245, #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        /* Ticker */
         .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: relative; }
         .ticker-content { display: inline-flex; padding-left: 100%; animation: scroll-rtl 40s linear infinite; }
         @keyframes scroll-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -60,9 +62,10 @@
         .faq-item.active i { transform: rotate(180deg); }
         
         .team-card:hover { transform: translateY(-10px); border-color: rgba(237, 66, 69, 0.4); }
-        
-        /* Process Step Styles */
         .step-number { font-size: 4rem; font-weight: 800; opacity: 0.1; position: absolute; top: -10px; right: 10px; }
+        
+        .terms-card { transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05); }
+        .terms-card:hover { border-color: #ED4245; transform: translateY(-5px); background: rgba(237, 66, 69, 0.02); }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased">
@@ -75,6 +78,9 @@
             <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red text-sm"></i> <span id="price-eth">ETH: Loading...</span></span>
         </div>
     </div>
+
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-red-600/10 blur-[120px] -z-10"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-red-900/10 blur-[120px] -z-10"></div>
 
     <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-50">
         <div class="flex items-center gap-3 group cursor-pointer" onclick="showPage('home')">
@@ -93,7 +99,7 @@
             </button>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
-            <i class="fa-brands fa-discord"></i> Discord
+            <i class="fa-brands fa-discord"></i> Discord Server
         </a>
     </nav>
 
@@ -108,12 +114,18 @@
                     Live Exchange Dashboard
                 </div>
                 <h1 class="text-7xl font-black mb-6 leading-tight">Trade Smarter, <br><span class="text-gradient">Not Harder.</span></h1>
-                <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">Instant processing, 24/7 staff, and the most competitive rates in the market.</p>
+                <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">The most reliable exchange service in the scene. Instant processing, 24/7 staff, and competitive fees.</p>
                 
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all text-center">
                         Start Exchange
                     </a>
+                    <div class="flex -space-x-3 items-center ml-4">
+                        <img src="https://ui-avatars.com/api/?name=J&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                        <img src="https://ui-avatars.com/api/?name=S&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                        <img src="https://ui-avatars.com/api/?name=M&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                        <span class="pl-6 text-sm text-gray-500 font-medium">1000+ Satisfied Clients</span>
+                    </div>
                 </div>
             </div>
 
@@ -134,11 +146,15 @@
                             <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Send</label>
                             <span class="text-xs text-red-400 font-bold" id="min-fee-alert" style="display:none;">€0.50 Min. Fee</span>
                         </div>
-                        <div class="relative">
+                        <div class="relative group">
                             <input type="number" id="sendAmount" value="100.00" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black focus:outline-none focus:border-red-500/50 transition-all">
-                            <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none">
+                            <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
                                 <option value="paypal">PayPal</option>
                                 <option value="crypto">Crypto</option>
+                                <option value="tikkie">Tikkie</option>
+                                <option value="skrill">Skrill</option>
+                                <option value="revolut">Revolut</option>
+                                <option value="paysafe">PaysafeCard</option>
                                 <option value="bank">Bank</option>
                             </select>
                         </div>
@@ -146,23 +162,27 @@
 
                     <div class="space-y-3">
                         <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Receive</label>
-                        <div class="relative">
+                        <div class="relative group">
                             <input type="number" id="receiveAmount" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
-                            <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none">
-                                <option value="crypto" selected>Crypto</option>
+                            <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
                                 <option value="paypal">PayPal</option>
+                                <option value="crypto" selected>Crypto</option>
                                 <option value="tikkie">Tikkie</option>
+                                <option value="skrill">Skrill</option>
+                                <option value="revolut">Revolut</option>
+                                <option value="paysafe">PaysafeCard</option>
+                                <option value="bank">Bank</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Fee Rate</p>
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Exchange Rate</p>
                             <p id="feeRateDisplay" class="text-xl font-black text-green-400">7%</p>
                         </div>
                         <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Fee Cost</p>
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Total Fee</p>
                             <p id="feeCostDisplay" class="text-xl font-black text-red-400">€7.00</p>
                         </div>
                     </div>
@@ -237,18 +257,35 @@
         </section>
     </main>
 
+    <main id="terms-page" class="page">
+        <section class="max-w-4xl mx-auto px-6 py-24">
+            <h2 class="text-5xl font-black mb-12 text-center">Service <span class="text-gradient">Terms</span></h2>
+            <div class="grid gap-6">
+                <div class="terms-card p-8 rounded-3xl glass">
+                    <h4 class="text-xl font-bold mb-4 accent-red">1. General Policy</h4>
+                    <p class="text-gray-400 leading-relaxed">We reserve the right to refuse service to anyone at our discretion. All exchanges are final once processed.</p>
+                </div>
+                <div class="terms-card p-8 rounded-3xl glass">
+                    <h4 class="text-xl font-bold mb-4 accent-red">2. Processing Time</h4>
+                    <p class="text-gray-400 leading-relaxed">While we aim for under 10 minutes, some exchanges may take up to 24 hours depending on liquidity and blockchain congestion.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 text-center text-gray-500 text-sm">
         <p>&copy; 2026 Kaap Exchanges. All rights reserved.</p>
     </footer>
 
     <script>
-        /* Logic for Page Navigation & Ticker stays same */
+        // Navigation Logic
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId + '-page').classList.add('active');
             window.scrollTo(0,0);
         }
 
+        // Crypto Ticker Logic
         async function fetchPrices() {
             try {
                 const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,solana&vs_currencies=eur');
@@ -263,6 +300,7 @@
         setInterval(fetchPrices, 60000);
         fetchPrices();
 
+        // UI Interactions
         function toggleFAQ(element) { element.classList.toggle('active'); }
 
         const themeBtn = document.getElementById('theme-toggle');
@@ -273,11 +311,14 @@
             icon.classList.toggle('fa-sun');
         });
 
-        /* ENHANCED CALCULATOR LOGIC */
-        let currentMode = 'send'; // 'send' or 'receive'
+        // Combined Calculator Logic
+        let currentMode = 'send';
         const routeFees = {
-            'paypal|crypto': 0.07, 'tikkie|crypto': 0.07, 'crypto|paypal': 0.02, 
-            'bank|crypto': 0.07, 'revolut|crypto': 0.07
+            'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|skrill': 0.10, 'paypal|bank': 0.05,
+            'crypto|paypal': 0.02, 'crypto|tikkie': 0.03, 'crypto|skrill': 0.05, 'crypto|bank': 0.03,
+            'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|skrill': 0.08, 'tikkie|bank': 0.02,
+            'revolut|crypto': 0.07, 'revolut|tikkie': 0.05, 'revolut|skrill': 0.10, 'revolut|paysafe': 0.10, 'revolut|bank': 0.05, 'revolut|revolut': 0.05,
+            'bank|crypto': 0.07, 'skrill|crypto': 0.10, 'paysafe|crypto': 0.15
         };
         const MIN_FEE = 0.50;
 
@@ -299,34 +340,38 @@
             if (currentMode === 'send') {
                 const sendAmt = parseFloat(sendInput.value) || 0;
                 let calculatedFee = sendAmt * feePercent;
+                const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
                 if (sendMethod !== 'crypto') calculatedFee = Math.max(calculatedFee, MIN_FEE);
                 
                 const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
                 receiveInput.value = receiveAmt.toFixed(2);
                 document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
+                document.getElementById('min-fee-alert').style.display = isMinFeeApplied ? 'block' : 'none';
             } else {
                 const receiveAmt = parseFloat(receiveInput.value) || 0;
-                // Reverse calculation: SendAmt = ReceiveAmt / (1 - FeePercent)
                 let sendAmt = receiveAmt / (1 - feePercent);
                 let calculatedFee = sendAmt - receiveAmt;
                 
-                if (sendMethod !== 'crypto' && calculatedFee < MIN_FEE) {
+                if (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && receiveAmt > 0) {
                     sendAmt = receiveAmt + MIN_FEE;
                     calculatedFee = MIN_FEE;
                 }
                 
                 sendInput.value = sendAmt.toFixed(2);
                 document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
+                document.getElementById('min-fee-alert').style.display = 'none';
             }
 
             document.getElementById('feeRateDisplay').innerText = `${(feePercent * 100).toFixed(0)}%`;
         }
 
+        // Event Listeners
         document.getElementById('sendAmount').addEventListener('input', () => { currentMode = 'send'; updateExchange(); });
         document.getElementById('receiveAmount').addEventListener('input', () => { currentMode = 'receive'; updateExchange(); });
         document.getElementById('sendMethod').addEventListener('change', updateExchange);
         document.getElementById('receiveMethod').addEventListener('change', updateExchange);
         
+        // Initial Run
         updateExchange();
     </script>
 </body>
