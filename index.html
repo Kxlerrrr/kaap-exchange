@@ -18,8 +18,7 @@
         .pulse-fee { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         
-        /* New Team Card Hover Effect */
-        .team-card:hover { transform: translateY(-10px); border-color: rgba(237, 66, 69, 0.3); transition: all 0.3s ease; }
+        .team-card:hover { transform: translateY(-10px); border-color: rgba(237, 66, 69, 0.4); }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased">
@@ -27,7 +26,7 @@
     <div class="fixed top-0 left-1/4 w-96 h-96 bg-red-600/10 blur-[120px] -z-10"></div>
     <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-red-900/10 blur-[120px] -z-10"></div>
 
-    <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center sticky top-0 z-50 bg-[#050505]/80 backdrop-blur-md">
+    <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
         <div class="flex items-center gap-3 group cursor-pointer">
             <div class="w-12 h-12 bg-red-glow rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-12">
                 <i class="fa-solid fa-bolt-lightning text-white text-xl"></i>
@@ -35,9 +34,8 @@
             <span class="text-2xl font-extrabold tracking-tight">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-400">
-            <a href="#" class="hover:text-white transition">Home</a>
-            <a href="#calculator" class="hover:text-white transition">Calculator</a>
-            <a href="#team" class="hover:text-white transition">Our Team</a>
+            <a href="#" class="hover:text-white transition">Exchange Server</a>
+            <a href="#team" class="hover:text-white transition">Meet the Team</a>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
             <i class="fa-brands fa-discord"></i> Discord Server
@@ -61,15 +59,15 @@
                     Start Exchange
                 </a>
                 <div class="flex -space-x-3 items-center ml-4">
-                    <img src="https://ui-avatars.com/api/?name=K&background=ED4245&color=fff" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
-                    <img src="https://ui-avatars.com/api/?name=B&background=222&color=fff" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
-                    <img src="https://ui-avatars.com/api/?name=N&background=444&color=fff" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=J&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=S&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
+                    <img src="https://ui-avatars.com/api/?name=M&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
                     <span class="pl-6 text-sm text-gray-500 font-medium">1000+ Satisfied Clients</span>
                 </div>
             </div>
         </div>
 
-        <div id="calculator" class="glass p-10 rounded-[40px] shadow-2xl relative">
+        <div class="glass p-10 rounded-[40px] shadow-2xl relative">
             <div class="absolute -top-6 -right-6 w-24 h-24 bg-red-500/20 blur-3xl"></div>
             
             <h3 class="text-2xl font-extrabold mb-8 flex items-center gap-3">
@@ -150,48 +148,49 @@
         </div>
     </section>
 
-    <section id="team" class="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
+    <section id="team" class="max-w-7xl mx-auto px-6 py-24">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-black mb-4">Meet Our <span class="text-gradient">Team</span></h2>
-            <p class="text-gray-400 max-w-lg mx-auto">The dedicated professionals behind Kaap Exchanges ensuring your trades are fast and secure.</p>
+            <p class="text-gray-400">The dedicated professionals behind Kaap Exchanges.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 text-center">
-            <div class="glass team-card p-10 rounded-[35px] transition-all">
-                <div class="w-24 h-24 bg-red-500/10 rounded-full mx-auto mb-6 flex items-center justify-center border border-red-500/30">
-                    <img src="https://ui-avatars.com/api/?name=Keandro&background=ED4245&color=fff&size=128" class="rounded-full w-20 h-20" alt="Keandro">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="glass p-8 rounded-[32px] text-center team-card transition-all duration-300">
+                <div class="w-24 h-24 bg-red-glow rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <img src="https://ui-avatars.com/api/?name=Kxlerrrr&background=ED4245&color=fff&size=128" class="rounded-full w-20 h-20 border-4 border-black/20" alt="Kxlerrrr">
                 </div>
-                <h4 class="text-xl font-extrabold mb-1">Keandro</h4>
-                <p class="text-red-400 text-xs font-bold uppercase tracking-widest mb-4">Founder</p>
-                <p class="text-gray-500 text-sm">Managing core operations and service excellence.</p>
+                <h4 class="text-xl font-black mb-1">Kxlerrrr</h4>
+                <p class="text-red-400 text-sm font-bold uppercase tracking-widest">Owner</p>
             </div>
 
-            <div class="glass team-card p-10 rounded-[35px] transition-all">
-                <div class="w-24 h-24 bg-red-500/10 rounded-full mx-auto mb-6 flex items-center justify-center border border-red-500/30">
-                    <img src="https://ui-avatars.com/api/?name=Blazed&background=ED4245&color=fff&size=128" class="rounded-full w-20 h-20" alt="Blazed">
+            <div class="glass p-8 rounded-[32px] text-center team-card transition-all duration-300">
+                <div class="w-24 h-24 bg-white/5 rounded-full mx-auto mb-6 flex items-center justify-center border border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=Keandro&background=333&color=fff&size=128" class="rounded-full w-20 h-20" alt="Keandro">
                 </div>
-                <h4 class="text-xl font-extrabold mb-1">Blazed</h4>
-                <p class="text-red-400 text-xs font-bold uppercase tracking-widest mb-4">Operations Manager</p>
-                <p class="text-gray-500 text-sm">Overseeing instant processing and security protocols.</p>
+                <h4 class="text-xl font-black mb-1">Keandro</h4>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Head Exchanger</p>
             </div>
 
-            <div class="glass team-card p-10 rounded-[35px] transition-all">
-                <div class="w-24 h-24 bg-red-500/10 rounded-full mx-auto mb-6 flex items-center justify-center border border-red-500/30">
-                    <img src="https://ui-avatars.com/api/?name=Notzen&background=ED4245&color=fff&size=128" class="rounded-full w-20 h-20" alt="Notzen">
+            <div class="glass p-8 rounded-[32px] text-center team-card transition-all duration-300">
+                <div class="w-24 h-24 bg-white/5 rounded-full mx-auto mb-6 flex items-center justify-center border border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=Notzen&background=333&color=fff&size=128" class="rounded-full w-20 h-20" alt="Notzen">
                 </div>
-                <h4 class="text-xl font-extrabold mb-1">Notzen</h4>
-                <p class="text-red-400 text-xs font-bold uppercase tracking-widest mb-4">Support Lead</p>
-                <p class="text-gray-500 text-sm">Ensuring 24/7 client satisfaction and smooth inquiries.</p>
+                <h4 class="text-xl font-black mb-1">Notzen</h4>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Exchanger</p>
+            </div>
+
+            <div class="glass p-8 rounded-[32px] text-center team-card transition-all duration-300">
+                <div class="w-24 h-24 bg-white/5 rounded-full mx-auto mb-6 flex items-center justify-center border border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=Blaze&background=333&color=fff&size=128" class="rounded-full w-20 h-20" alt="Blaze">
+                </div>
+                <h4 class="text-xl font-black mb-1">Blaze</h4>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Exchanger</p>
             </div>
         </div>
     </section>
 
-    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p class="text-gray-500 text-sm">© 2024 Kaap Exchanges. All rights reserved.</p>
-        <div class="flex gap-6 text-gray-500 text-xl">
-            <a href="https://discord.gg/kaapp" class="hover:text-red-400 transition"><i class="fa-brands fa-discord"></i></a>
-            <a href="#" class="hover:text-red-400 transition"><i class="fa-solid fa-server"></i></a>
-        </div>
+    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 Kaap Exchanges. All rights reserved.</p>
     </footer>
 
     <script>
@@ -211,16 +210,11 @@
             const sendAmt = parseFloat(document.getElementById('sendAmount').value) || 0;
             const sendMethod = document.getElementById('sendMethod').value;
             const receiveMethod = document.getElementById('receiveMethod').value;
-
             const routeKey = `${sendMethod}|${receiveMethod}`;
-            const feePercent = routeFees[routeKey] || 0.05;
-            
+            const feePercent = routeFees[routeKey] || 0.10;
             let calculatedFee = sendAmt * feePercent;
             const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
-            if (sendMethod !== 'crypto') {
-                calculatedFee = Math.max(calculatedFee, MIN_FEE);
-            }
-
+            if (sendMethod !== 'crypto') { calculatedFee = Math.max(calculatedFee, MIN_FEE); }
             const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
 
             document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
@@ -229,10 +223,7 @@
             document.getElementById('min-fee-alert').style.display = isMinFeeApplied ? 'block' : 'none';
         }
 
-        document.querySelectorAll('input, select').forEach(el => {
-            el.addEventListener('input', updateExchange);
-        });
-
+        document.querySelectorAll('input, select').forEach(el => { el.addEventListener('input', updateExchange); });
         updateExchange();
     </script>
 </body>
