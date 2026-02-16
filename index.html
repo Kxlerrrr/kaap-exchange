@@ -34,7 +34,6 @@
             <span class="text-2xl font-extrabold tracking-tight">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-400">
-            <a href="#" class="hover:text-white transition">Exchange Server</a>
             <a href="#team" class="hover:text-white transition">Meet the Team</a>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
@@ -225,6 +224,41 @@
 
         document.querySelectorAll('input, select').forEach(el => { el.addEventListener('input', updateExchange); });
         updateExchange();
+
+                     // Connect to your Python server (replace localhost with your VPS IP later)
+const socket = new WebSocket('ws://localhost:8000/ws');
+
+socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    updateLiveFeed(data.user, data.amount, data.method);
+};
+
+function updateLiveFeed(user, amount, method) {
+    const container = document.getElementById('vouch-container');
+    const counter = document.getElementById('total-deals-counter');
+    
+    // Create new vouch element
+    const dealEl = document.createElement('div');
+    dealEl.className = "bg-red-500/10 p-4 rounded-2xl border border-red-500/20 flex justify-between items-center animate-bounce";
+    dealEl.innerHTML = `
+        <div>
+            <span class="font-bold text-white">${user}</span> 
+            <span class="text-gray-400 text-sm pl-1">exchanged</span> 
+            <span class="text-green-400 font-bold pl-1">${method}</span>
+        </div>
+        <div class="text-xs font-bold text-red-400">+ €${amount}</div>
+    `;
+
+    // Update UI
+    container.prepend(dealEl);
+    
+    // Update counter (removes '€' or ',' to do math then adds it back)
+    let currentVal = parseInt(counter.innerText.replace(/,/g, ''));
+    counter.innerText = (currentVal + 1).toLocaleString();
+
+    // Remove animation after 3 seconds
+    setTimeout(() => dealEl.classList.remove('animate-bounce'), 3000);
+}
     </script>
 </body>
 </html>
