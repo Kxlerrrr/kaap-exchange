@@ -23,10 +23,25 @@
         .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.4); }
         .text-gradient { background: linear-gradient(to right, #ED4245, #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Ticker Animation */
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.1); border-bottom: 1px solid rgba(237, 66, 69, 0.2); }
-        .ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
+        /* FIXED: Professional Right-to-Left Ticker Animation */
+        .ticker-wrapper { 
+            overflow: hidden; 
+            white-space: nowrap; 
+            background: rgba(237, 66, 69, 0.05); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .ticker-content { 
+            display: inline-flex; 
+            padding-left: 100%; /* Starts content completely off-screen to the right */
+            animation: scroll-rtl 40s linear infinite; 
+        }
+
+        @keyframes scroll-rtl {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); } /* Moves until the end of the content hits the left edge */
+        }
         
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
         .faq-item.active .faq-content { max-height: 200px; padding-top: 1rem; }
@@ -37,16 +52,16 @@
 </head>
 <body class="overflow-x-hidden antialiased">
 
-    <div class="ticker-wrapper py-2">
-        <div class="ticker-content flex gap-12 text-xs font-bold uppercase tracking-tighter" id="crypto-ticker">
-            <span id="price-btc">BTC: Loading...</span>
-            <span id="price-eth">ETH: Loading...</span>
-            <span id="price-ltc">LTC: Loading...</span>
-            <span id="price-sol">SOL: Loading...</span>
-            <span id="price-btc2">BTC: Loading...</span>
-            <span id="price-eth2">ETH: Loading...</span>
-            <span id="price-ltc2">LTC: Loading...</span>
-            <span id="price-sol2">SOL: Loading...</span>
+    <div class="ticker-wrapper py-3">
+        <div class="ticker-content flex gap-16 text-[10px] font-extrabold uppercase tracking-[0.2em] items-center" id="crypto-ticker">
+            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red text-sm"></i> <span id="price-btc">BTC: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red text-sm"></i> <span id="price-eth">ETH: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red text-sm"></i> <span id="price-ltc">LTC: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red text-sm"></i> <span id="price-sol">SOL: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red text-sm"></i> <span id="price-btc2">BTC: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red text-sm"></i> <span id="price-eth2">ETH: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red text-sm"></i> <span id="price-ltc2">LTC: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red text-sm"></i> <span id="price-sol2">SOL: Loading...</span></span>
         </div>
     </div>
 
@@ -194,15 +209,6 @@
                     We apply a minimum fee of €0.50 on non-crypto transactions to cover processing costs.
                 </div>
             </div>
-            <div class="faq-item glass p-6 rounded-2xl cursor-pointer" onclick="toggleFAQ(this)">
-                <div class="flex justify-between items-center">
-                    <h4 class="font-bold">Is my data safe?</h4>
-                    <i class="fa-solid fa-chevron-down transition-transform"></i>
-                </div>
-                <div class="faq-content text-gray-400 text-sm">
-                    Yes, we use industry-standard encryption and operate through secure Discord ticket channels.
-                </div>
-            </div>
         </div>
     </section>
 
@@ -248,7 +254,7 @@
     </footer>
 
     <script>
-        /* 2. Crypto Ticker Logic */
+        /* Crypto Ticker Logic */
         async function fetchPrices() {
             try {
                 const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,solana&vs_currencies=eur');
@@ -256,20 +262,16 @@
                 const coins = { btc: 'bitcoin', eth: 'ethereum', ltc: 'litecoin', sol: 'solana' };
                 for (const [id, name] of Object.entries(coins)) {
                     const price = data[name].eur.toLocaleString();
-                    document.getElementById(`price-${id}`).innerText = `${id.toUpperCase()}: €${price}`;
-                    document.getElementById(`price-${id}2`).innerText = `${id.toUpperCase()}: €${price}`;
+                    if(document.getElementById(`price-${id}`)) document.getElementById(`price-${id}`).innerText = `${id.toUpperCase()}: €${price}`;
+                    if(document.getElementById(`price-${id}2`)) document.getElementById(`price-${id}2`).innerText = `${id.toUpperCase()}: €${price}`;
                 }
             } catch (e) { console.error("Price fetch failed"); }
         }
         setInterval(fetchPrices, 60000);
         fetchPrices();
 
-        /* 4. FAQ Logic */
-        function toggleFAQ(element) {
-            element.classList.toggle('active');
-        }
+        function toggleFAQ(element) { element.classList.toggle('active'); }
 
-        /* 6. Theme Toggle Logic */
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
@@ -278,7 +280,7 @@
             icon.classList.toggle('fa-sun');
         });
 
-        /* Calculator Logic (Keep same as original) */
+        /* Calculator Logic */
         const routeFees = {
             'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
             'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
