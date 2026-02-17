@@ -28,10 +28,28 @@
         .bg-red-glow:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(237, 66, 69, 0.7); }
         .text-gradient { background: linear-gradient(135deg, #ED4245 0%, #ff8a8a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* CRAZY TICKER */
-        .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.08); border-bottom: 1px solid rgba(237, 66, 69, 0.2); }
-        .ticker-content { display: inline-flex; animation: scroll-rtl 30s linear infinite; }
-        @keyframes scroll-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* FIXED TICKER ANIMATION */
+        .ticker-wrapper { 
+            overflow: hidden; 
+            white-space: nowrap; 
+            background: rgba(237, 66, 69, 0.08); 
+            border-bottom: 1px solid rgba(237, 66, 69, 0.2);
+            position: relative;
+            width: 100%;
+        }
+        .ticker-content { 
+            display: inline-flex; 
+            animation: scroll-left 40s linear infinite; 
+            padding-left: 100%; /* Ensures it starts from the far right */
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-item {
+            flex-shrink: 0;
+            padding: 0 40px;
+        }
         
         /* PAGE TRANSITIONS */
         .page { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
@@ -64,15 +82,15 @@
     <canvas id="particle-canvas"></canvas>
 
     <div class="ticker-wrapper py-3">
-        <div class="ticker-content flex gap-16 text-[10px] font-extrabold uppercase tracking-[0.2em] items-center" id="crypto-ticker">
-            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
+        <div class="ticker-content text-[10px] font-extrabold uppercase tracking-[0.2em] items-center" id="crypto-ticker">
+            <span class="ticker-item flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
+            <span class="ticker-item flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
         </div>
     </div>
 
@@ -423,7 +441,6 @@
     </footer>
 
     <script>
-        /* PAGE NAVIGATION ENGINE */
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => {
                 p.classList.remove('active');
@@ -435,7 +452,6 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        /* LIVE PRICE ENGINE (COINGECKO) */
         async function fetchPrices() {
             try {
                 const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,solana&vs_currencies=eur');
@@ -450,7 +466,6 @@
         setInterval(fetchPrices, 30000);
         fetchPrices();
 
-        /* THEME TOGGLE */
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
@@ -459,7 +474,6 @@
             icon.classList.toggle('fa-sun');
         });
 
-        /* EXCHANGE ENGINE */
         const routeFees = {
             'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
             'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
@@ -479,20 +493,17 @@
             const feePercent = routeFees[routeKey] || 0.10;
             let calculatedFee = sendAmt * feePercent;
             
-            const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
             if (sendMethod !== 'crypto') { calculatedFee = Math.max(calculatedFee, MIN_FEE); }
             
             const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
             document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
             document.getElementById('feeRateDisplay').innerText = `${(feePercent * 100).toFixed(0)}%`;
             document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
-            document.getElementById('min-fee-alert').classList.toggle('hidden', !isMinFeeApplied);
         }
 
         document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
         updateExchange();
 
-        /* BACKGROUND PARTICLE ENGINE */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -539,7 +550,6 @@
         initParticles();
         animate();
 
-        /* FAQ ANIMATION HELPER */
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 const content = item.querySelector('.faq-content');
