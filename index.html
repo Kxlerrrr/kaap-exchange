@@ -9,129 +9,136 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
-        /* Default Dark Mode */
-        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.3s, color 0.3s; }
         
-        /* Light Mode Overrides */
-        body.light-mode { background: #f9fafb; color: #111827; }
-        body.light-mode .glass { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.1); color: #111827; }
-        body.light-mode .text-gray-400 { color: #4b5563; }
-        body.light-mode input, body.light-mode select { background: rgba(0,0,0,0.05); color: #111827; border-color: rgba(0,0,0,0.1); }
+        /* THEMES & CORE */
+        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1); overflow-x: hidden; }
+        body.light-mode { background: #f3f4f6; color: #111827; }
+        body.light-mode .glass { background: rgba(255, 255, 255, 0.7); border-color: rgba(0,0,0,0.1); color: #111827; }
+        body.light-mode .bg-neutral-900 { background: #ffffff !important; color: #111827 !important; border: 1px solid #ddd; }
+        
+        /* CRAZY ANIMATED BACKGROUND */
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
 
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        /* GLASSMORPHISM UPGRADES */
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); transition: all 0.3s ease; }
+        .glass:hover { border-color: rgba(237, 66, 69, 0.4); box-shadow: 0 8px 32px 0 rgba(237, 66, 69, 0.1); }
+
         .accent-red { color: #ED4245; }
-        .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.4); }
-        .text-gradient { background: linear-gradient(to right, #ED4245, #ff8a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.5); border: none; }
+        .bg-red-glow:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(237, 66, 69, 0.7); }
+        .text-gradient { background: linear-gradient(135deg, #ED4245 0%, #ff8a8a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Professional Right-to-Left Ticker */
-        .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); position: relative; }
-        .ticker-content { display: inline-flex; padding-left: 100%; animation: scroll-rtl 40s linear infinite; }
-        @keyframes scroll-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        /* CRAZY TICKER */
+        .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.08); border-bottom: 1px solid rgba(237, 66, 69, 0.2); }
+        .ticker-content { display: inline-flex; animation: scroll-rtl 30s linear infinite; }
+        @keyframes scroll-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
-        /* Layout & Transitions */
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* PAGE TRANSITIONS */
+        .page { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+        .page.active { display: block; opacity: 1; transform: translateY(0); }
 
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .faq-item.active .faq-content { max-height: 200px; padding-top: 1rem; }
-        .faq-item.active i { transform: rotate(180deg); }
-        
-        .terms-card { transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05); }
-        .terms-card:hover { border-color: #ED4245; transform: translateY(-5px); background: rgba(237, 66, 69, 0.02); }
+        /* TEAM CARDS 2.0 */
+        .team-card { position: relative; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .team-card:hover { transform: translateY(-15px) rotateX(5deg) rotateY(5deg); }
+        .avatar-container { position: relative; width: 110px; height: 110px; margin: 0 auto 1.5rem; }
+        .avatar-ring { position: absolute; inset: -8px; border: 2px dashed #ED4245; border-radius: 50%; animation: spin 10s linear infinite; opacity: 0.3; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* UPGRADED TEAM SECTION STYLES */
-        .team-card { position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255,255,255,0.05); }
-        .team-card:hover { transform: translateY(-12px); border-color: rgba(237, 66, 69, 0.5); background: rgba(237, 66, 69, 0.03); }
-        .team-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(237, 66, 69, 0.1), transparent); opacity: 0; transition: 0.4s; }
-        .team-card:hover::before { opacity: 1; }
-        
-        .avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 1.5rem; }
-        .avatar-ring { position: absolute; inset: -4px; border: 2px solid transparent; border-radius: 50%; transition: 0.4s; }
-        .team-card:hover .avatar-ring { border-color: #ED4245; transform: rotate(180deg); border-style: dashed; }
-        
-        .role-badge { font-size: 0.65rem; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
-        .team-card:hover .role-badge { background: #ED4245; color: white; border-color: #ED4245; }
-        
-        .owner-card { border-color: rgba(237, 66, 69, 0.3); background: linear-gradient(145deg, rgba(237, 66, 69, 0.05), rgba(0,0,0,0)); }
+        /* PULSING STATUS DOT */
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; position: relative; }
+        .status-online { background: #10b981; box-shadow: 0 0 10px #10b981; }
+        .status-online::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #10b981; animation: ping 1.5s infinite; }
+
+        /* FLOATING ACTION BUTTON */
+        .fab { position: fixed; bottom: 30px; right: 30px; z-index: 100; transition: 0.3s; }
+        .fab:hover { transform: rotate(15deg); }
     </style>
 </head>
-<body class="overflow-x-hidden antialiased">
+<body class="antialiased">
+
+    <canvas id="particle-canvas"></canvas>
 
     <div class="ticker-wrapper py-3">
         <div class="ticker-content flex gap-16 text-[10px] font-extrabold uppercase tracking-[0.2em] items-center" id="crypto-ticker">
-            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red text-sm"></i> <span id="price-ltc">LTC: Loading...</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red text-sm"></i> <span id="price-btc">BTC: Loading...</span></span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red text-sm"></i> <span id="price-sol">SOL: Loading...</span></span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red text-sm"></i> <span id="price-eth">ETH: Loading...</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-coins accent-red"></i> <span class="price-ltc">LTC: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-bitcoin accent-red"></i> <span class="price-btc">BTC: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-bolt accent-red"></i> <span class="price-sol">SOL: €--</span></span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-ethereum accent-red"></i> <span class="price-eth">ETH: €--</span></span>
         </div>
     </div>
 
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-red-600/10 blur-[120px] -z-10"></div>
-    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-red-900/10 blur-[120px] -z-10"></div>
-
     <nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-50">
         <div class="flex items-center gap-3 group cursor-pointer" onclick="showPage('home')">
-            <div class="w-12 h-12 bg-red-glow rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-12">
+            <div class="w-12 h-12 bg-red-glow rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-[360deg] duration-700">
                 <i class="fa-solid fa-bolt-lightning text-white text-xl"></i>
             </div>
-            <span class="text-2xl font-extrabold tracking-tight uppercase">KAAP <span class="accent-red">EXCHANGES</span></span>
+            <span class="text-2xl font-extrabold tracking-tighter uppercase">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
-        <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-400 items-center">
-            <button onclick="showPage('home')" class="hover:text-white transition">Exchange</button>
-            <button onclick="showPage('terms')" class="hover:text-white transition">Terms</button>
-            <a href="#vouch-section" class="hover:text-white transition">Vouches</a>
-            <a href="#faq" class="hover:text-white transition">FAQ</a>
-            <a href="#team" class="hover:text-white transition">Team</a>
-            <button id="theme-toggle" class="glass w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition">
-                <i class="fa-solid fa-moon"></i>
+        <div class="hidden md:flex gap-10 text-sm font-bold text-gray-400 items-center">
+            <button onclick="showPage('home')" class="hover:text-white hover:accent-red transition-all">Exchange</button>
+            <button onclick="showPage('terms')" class="hover:text-white hover:accent-red transition-all">Terms</button>
+            <a href="#vouch-section" class="hover:text-white transition-all">Vouches</a>
+            <a href="#faq" class="hover:text-white transition-all">FAQ</a>
+            <a href="#team" class="hover:text-white transition-all">Team</a>
+            <button id="theme-toggle" class="glass w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-all">
+                <i class="fa-solid fa-moon text-lg"></i>
             </button>
         </div>
-        <a href="https://discord.gg/kaapp" target="_blank" class="glass px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/10 transition flex items-center gap-2">
-            <i class="fa-brands fa-discord"></i> Discord Server
+        <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
+            <i class="fa-brands fa-discord"></i> Join Discord
         </a>
     </nav>
 
     <main id="home-page" class="page active">
-        <section class="max-w-7xl mx-auto px-6 pt-12 pb-24 grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-bold text-red-400 mb-6 uppercase tracking-widest">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                    </span>
-                    Live Exchange Dashboard
+        <section class="max-w-7xl mx-auto px-6 pt-16 pb-24 grid lg:grid-cols-2 gap-20 items-center">
+            <div class="relative">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-black text-red-400 mb-8 uppercase tracking-[0.2em]">
+                    <div class="status-dot status-online"></div>
+                    Servers Online & Secure
                 </div>
-                <h1 class="text-7xl font-black mb-6 leading-tight">Trade Smarter, <br><span class="text-gradient">Not Harder.</span></h1>
-                <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">The most reliable exchange service in the scene. Instant processing, 24/7 staff, and competitive fees.</p>
+                <h1 class="text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
+                    THE GOLD <br><span class="text-gradient">STANDARD.</span>
+                </h1>
+                <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">
+                    Experience the next generation of asset swapping. Automated calculations, verified security, and lightning-fast delivery.
+                </p>
                 
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all text-center">
-                        Start Exchange
+                <div class="flex flex-col sm:flex-row gap-6 items-center">
+                    <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-12 py-6 rounded-2xl font-black text-xl hover:scale-105 transition-all w-full sm:w-auto text-center">
+                        OPEN TICKET
                     </a>
-                    <div class="flex -space-x-3 items-center ml-4">
-                        <img src="https://ui-avatars.com/api/?name=J&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
-                        <img src="https://ui-avatars.com/api/?name=S&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
-                        <img src="https://ui-avatars.com/api/?name=M&background=random" class="w-10 h-10 rounded-full border-2 border-black" alt="User">
-                        <span class="pl-6 text-sm text-gray-500 font-medium">1000+ Satisfied Clients</span>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <img src="https://ui-avatars.com/api/?name=1&bg=ED4245" class="w-12 h-12 rounded-full border-4 border-black">
+                            <img src="https://ui-avatars.com/api/?name=2&bg=222" class="w-12 h-12 rounded-full border-4 border-black">
+                            <img src="https://ui-avatars.com/api/?name=3&bg=ED4245" class="w-12 h-12 rounded-full border-4 border-black">
+                        </div>
+                        <div>
+                            <p class="text-white font-bold text-lg">1,000+</p>
+                            <p class="text-xs text-gray-500 uppercase font-black">Success Deals</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass p-10 rounded-[40px] shadow-2xl relative">
-                <div class="absolute -top-6 -right-6 w-24 h-24 bg-red-500/20 blur-3xl"></div>
-                <h3 class="text-2xl font-extrabold mb-8 flex items-center gap-3">
-                    <i class="fa-solid fa-calculator accent-red"></i> Fee Calculator
+            <div class="glass p-12 rounded-[50px] relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-[60px] group-hover:bg-red-500/20 transition-all"></div>
+                <h3 class="text-3xl font-black mb-10 flex items-center gap-4">
+                    <i class="fa-solid fa-wand-magic-sparkles accent-red"></i> Swap Engine
                 </h3>
                 <div class="space-y-8">
                     <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Send</label>
-                            <span class="text-xs text-red-400 font-bold" id="min-fee-alert" style="display:none;">€0.50 Min. Fee Applied</span>
+                        <div class="flex justify-between items-end">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-gray-500">Amount to send</label>
+                            <span id="min-fee-alert" class="text-[10px] bg-red-500/20 text-red-400 px-2 py-1 rounded-md font-bold hidden">€0.50 MIN FEE</span>
                         </div>
-                        <div class="relative group">
-                            <input type="number" id="sendAmount" value="100.00" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black focus:outline-none focus:border-red-500/50 transition-all">
-                            <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
+                        <div class="relative">
+                            <input type="number" id="sendAmount" value="100.00" class="w-full bg-white/5 border-2 border-white/5 p-8 rounded-3xl text-4xl font-black focus:outline-none focus:border-red-500/50 transition-all">
+                            <select id="sendMethod" class="absolute right-4 top-4 bottom-4 bg-neutral-900 rounded-2xl px-6 font-black text-sm outline-none border border-white/10">
                                 <option value="paypal">PayPal</option>
                                 <option value="crypto">Crypto</option>
                                 <option value="tikkie">Tikkie</option>
@@ -142,11 +149,18 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="flex justify-center -my-4 relative z-10">
+                        <div class="w-12 h-12 bg-neutral-900 border-2 border-red-500/30 rounded-full flex items-center justify-center rotate-0 hover:rotate-180 transition-all duration-500 cursor-pointer">
+                            <i class="fa-solid fa-repeat accent-red"></i>
+                        </div>
+                    </div>
+
                     <div class="space-y-3">
-                        <label class="text-xs font-bold uppercase tracking-widest text-gray-500">You Receive</label>
-                        <div class="relative group">
-                            <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
-                            <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 border-none rounded-xl px-4 text-sm font-extrabold text-white cursor-pointer outline-none hover:bg-neutral-800">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-500">Amount to receive</label>
+                        <div class="relative">
+                            <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border-2 border-white/5 p-8 rounded-3xl text-4xl font-black text-red-400 focus:outline-none">
+                            <select id="receiveMethod" class="absolute right-4 top-4 bottom-4 bg-neutral-900 rounded-2xl px-6 font-black text-sm outline-none border border-white/10">
                                 <option value="paypal">PayPal</option>
                                 <option value="crypto" selected>Crypto</option>
                                 <option value="tikkie">Tikkie</option>
@@ -157,35 +171,47 @@
                             </select>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Exchange Rate</p>
-                            <p id="feeRateDisplay" class="text-xl font-black text-green-400">7%</p>
+
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="glass p-6 rounded-3xl border-none bg-white/5">
+                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Rate Applied</p>
+                            <p id="feeRateDisplay" class="text-2xl font-black text-emerald-400">7%</p>
                         </div>
-                        <div class="bg-white/5 p-5 rounded-2xl border border-white/5">
-                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Total Fee</p>
-                            <p id="feeCostDisplay" class="text-xl font-black text-red-400">€7.00</p>
+                        <div class="glass p-6 rounded-3xl border-none bg-white/5">
+                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Service Fee</p>
+                            <p id="feeCostDisplay" class="text-2xl font-black text-red-400">€7.00</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="vouch-section" class="max-w-7xl mx-auto px-6 py-12">
-            <div class="glass p-10 rounded-[40px] border-l-4 border-red-500">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div>
-                        <h3 class="text-3xl font-black mb-2">Community <span class="accent-red">Vouches</span></h3>
-                        <p class="text-gray-400">Real feedback from our vouch channel on Discord.</p>
+        <section id="vouch-section" class="max-w-7xl mx-auto px-6 py-20">
+            <div class="glass p-12 rounded-[50px] border-none bg-gradient-to-r from-red-500/5 to-transparent relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
+                    <div class="max-w-md">
+                        <h3 class="text-4xl font-black mb-4 italic uppercase tracking-tighter">Verified <span class="accent-red">Vouches</span></h3>
+                        <p class="text-gray-400 mb-6">Our reputation is built on transparency. Join 1,000+ users who trust Kaap.</p>
+                        <a href="https://discord.gg/kaapp" class="text-red-400 font-bold flex items-center gap-2 hover:gap-4 transition-all">
+                            View all 800+ vouches <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
-                    <div class="flex gap-4 overflow-x-auto pb-4 w-full md:w-auto">
-                        <div class="min-w-[280px] glass p-6 rounded-2xl italic text-sm">
-                            "+rep @kxlerrrr | Litecoin → Tikkie | €100.00"
-                            <p class="mt-4 font-bold accent-red not-italic">— Mick</p>
+                    <div class="flex gap-6 overflow-x-auto pb-4 w-full">
+                        <div class="min-w-[320px] glass p-8 rounded-3xl relative">
+                            <i class="fa-solid fa-quote-left absolute top-4 left-4 opacity-10 text-4xl"></i>
+                            <p class="italic text-gray-300 text-lg mb-6 leading-relaxed">"+rep @kxlerrrr | Litecoin → Tikkie | Fast as lightning, no issues at all!"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center font-bold">M</div>
+                                <p class="font-black accent-red">Mick.eth</p>
+                            </div>
                         </div>
-                        <div class="min-w-[280px] glass p-6 rounded-2xl italic text-sm">
-                            "+rep @kxlerrrr | PayPal → Litecoin | €118.77.00"
-                            <p class="mt-4 font-bold accent-red not-italic">— Aribakos</p>
+                        <div class="min-w-[320px] glass p-8 rounded-3xl relative">
+                            <i class="fa-solid fa-quote-left absolute top-4 left-4 opacity-10 text-4xl"></i>
+                            <p class="italic text-gray-300 text-lg mb-6 leading-relaxed">"Best fees in the scene. PayPal to LTC was done in under 5 minutes."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold">A</div>
+                                <p class="font-black accent-red">Aribakos</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -193,24 +219,34 @@
         </section>
 
         <section id="faq" class="max-w-4xl mx-auto px-6 py-24">
-            <h2 class="text-4xl font-black mb-12 text-center">Frequently Asked <span class="text-gradient">Questions</span></h2>
-            <div class="space-y-4">
-                <div class="faq-item glass p-6 rounded-2xl cursor-pointer" onclick="toggleFAQ(this)">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Questions? <span class="text-gradient">Answers.</span></h2>
+            </div>
+            <div class="grid gap-4">
+                <div class="faq-item glass p-8 rounded-3xl cursor-pointer hover:bg-white/5 transition-all group" onclick="this.classList.toggle('active')">
                     <div class="flex justify-between items-center">
-                        <h4 class="font-bold">How long does an exchange take?</h4>
-                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                        <h4 class="text-xl font-bold group-hover:accent-red transition-colors">How long does an exchange take?</h4>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 arrow-icon">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
-                    <div class="faq-content text-gray-400 text-sm">
-                        Most exchanges are processed within 5-10 minutes once the funds are confirmed on our end.
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
+                        <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
+                            Once your funds are confirmed (1 confirmation for crypto), we process the payout immediately. On average, users receive their funds within **5 to 10 minutes**.
+                        </p>
                     </div>
                 </div>
-                <div class="faq-item glass p-6 rounded-2xl cursor-pointer" onclick="toggleFAQ(this)">
+                <div class="faq-item glass p-8 rounded-3xl cursor-pointer hover:bg-white/5 transition-all group" onclick="this.classList.toggle('active')">
                     <div class="flex justify-between items-center">
-                        <h4 class="font-bold">What are the minimum fees?</h4>
-                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                        <h4 class="text-xl font-bold group-hover:accent-red transition-colors">Is there a minimum exchange amount?</h4>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 arrow-icon">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
-                    <div class="faq-content text-gray-400 text-sm">
-                        We apply a minimum fee of €0.50 on non-crypto transactions to cover processing costs.
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
+                        <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
+                            We don't have a strict minimum amount, but we do apply a **€0.50 minimum fee** on non-crypto transactions to cover our processing costs.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -218,180 +254,156 @@
 
         <section id="team" class="max-w-7xl mx-auto px-6 py-24">
             <div class="text-center mb-20">
-                <div class="inline-block px-4 py-1.5 rounded-full bg-red-500/5 border border-red-500/10 text-red-500 text-xs font-black uppercase tracking-[0.3em] mb-4">
-                    Direct Staff Access
-                </div>
-                <h2 class="text-5xl font-black mb-4 tracking-tighter">The <span class="text-gradient">Powerhouse</span></h2>
-                <p class="text-gray-400 text-lg">Our verified team is online and ready to assist your trades.</p>
+                <p class="text-red-500 font-black uppercase tracking-[0.4em] text-xs mb-4">Our Elite Staff</p>
+                <h2 class="text-6xl font-black mb-4 tracking-tighter">THE <span class="text-gradient">OPERATORS</span></h2>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="glass p-10 rounded-[40px] text-center team-card owner-card group">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="glass p-10 rounded-[50px] text-center team-card border-red-500/20 bg-gradient-to-b from-red-500/5 to-transparent">
                     <div class="avatar-container">
-                        <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-green-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kxlerrrr&backgroundColor=b6e3f4,c0aede,d1d4f9" class="rounded-full w-full h-full object-cover border-4 border-black/20 relative z-10 bg-gradient-to-br from-red-500 to-red-900" alt="Kxlerrrr">
+                        <div class="avatar-ring" style="opacity: 1;"></div>
+                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20 shadow-lg"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kxlerrrr&backgroundColor=ED4245" class="rounded-full w-full h-full object-cover relative z-10 shadow-2xl">
                     </div>
-                    <h4 class="text-2xl font-black mb-2 flex items-center justify-center gap-2">
-                        Kxlerrrr <i class="fa-solid fa-circle-check text-blue-400 text-sm"></i>
-                    </h4>
-                    <span class="role-badge font-black uppercase tracking-widest text-red-400">Founder & Owner</span>
-                    
-                    <div class="mt-8 flex justify-center gap-2">
-                        <a href="https://discord.com/users/1432460080007221308" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#5865F2] hover:text-white transition-all duration-300" title="Discord Profile">
-                            <i class="fa-brands fa-discord"></i>
-                        </a>
-                    </div>
+                    <h4 class="text-2xl font-black mb-1 flex items-center justify-center gap-2">Kxlerrrr <i class="fa-solid fa-crown text-yellow-500 text-sm"></i></h4>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-red-500 mb-6">Founder & CEO</p>
+                    <a href="https://discord.com/users/1432460080007221308" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
+                        <i class="fa-brands fa-discord"></i> Profile
+                    </a>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] text-center team-card group">
+                <div class="glass p-10 rounded-[50px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-green-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Keandro&backgroundColor=ffd5dc,ffdfbf" class="rounded-full w-full h-full object-cover relative z-10 bg-neutral-800" alt="Keandro">
+                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Keandro&backgroundColor=333" class="rounded-full w-full h-full object-cover relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-2">Keandro</h4>
-                    <span class="role-badge font-black uppercase tracking-widest text-gray-400">Head Exchanger</span>
-                    
-                    <div class="mt-8 flex justify-center gap-2">
-                        <a href="https://discord.com/users/1394116532958789766" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#5865F2] hover:text-white transition-all duration-300">
-                            <i class="fa-brands fa-discord"></i>
-                        </a>
-                    </div>
+                    <h4 class="text-2xl font-black mb-1">Keandro</h4>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Head Exchanger</p>
+                    <a href="https://discord.com/users/1394116532958789766" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
+                        <i class="fa-brands fa-discord"></i> Profile
+                    </a>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] text-center team-card group">
+                <div class="glass p-10 rounded-[50px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-yellow-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Notzen&backgroundColor=c0aede,d1d4f9" class="rounded-full w-full h-full object-cover relative z-10 bg-neutral-800" alt="Notzen">
+                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-amber-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Notzen&backgroundColor=555" class="rounded-full w-full h-full object-cover relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-2">Notzen</h4>
-                    <span class="role-badge font-black uppercase tracking-widest text-gray-400">Junior Exchanger</span>
-                    
-                    <div class="mt-8 flex justify-center gap-2">
-                        <a href="https://discord.com/users/495932495586394122" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#5865F2] hover:text-white transition-all duration-300">
-                            <i class="fa-brands fa-discord"></i>
-                        </a>
-                    </div>
+                    <h4 class="text-2xl font-black mb-1">Notzen</h4>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Junior Exchanger</p>
+                    <a href="https://discord.com/users/495932495586394122" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
+                        <i class="fa-brands fa-discord"></i> Profile
+                    </a>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] text-center team-card group">
+                <div class="glass p-10 rounded-[50px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-green-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Blaze&backgroundColor=b6e3f4,d1d4f9" class="rounded-full w-full h-full object-cover relative z-10 bg-neutral-800" alt="Blaze">
+                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Blaze&backgroundColor=777" class="rounded-full w-full h-full object-cover relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-2">Blaze</h4>
-                    <span class="role-badge font-black uppercase tracking-widest text-gray-400">Junior Exchanger</span>
-                    
-                    <div class="mt-8 flex justify-center gap-2">
-                        <a href="https://discord.com/users/1467244391146983497" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#5865F2] hover:text-white transition-all duration-300">
-                            <i class="fa-brands fa-discord"></i>
-                        </a>
-                    </div>
+                    <h4 class="text-2xl font-black mb-1">Blaze</h4>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Junior Exchanger</p>
+                    <a href="https://discord.com/users/1467244391146983497" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
+                        <i class="fa-brands fa-discord"></i> Profile
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
     <main id="terms-page" class="page">
-        <section class="max-w-7xl mx-auto px-6 py-12">
-            <div class="text-center mb-16">
-                <h1 class="text-6xl font-black mb-4 uppercase tracking-tighter">Exchange <span class="text-gradient">Terms</span></h1>
-                <p class="text-gray-400 max-w-2xl mx-auto">By opening a ticket, you automatically agree to the following protocols. Ignorance of these rules is not an excuse for violations.</p>
+        <section class="max-w-7xl mx-auto px-6 py-16">
+            <div class="text-center mb-20">
+                <h1 class="text-7xl font-black mb-6 uppercase tracking-tighter">LEGAL <span class="text-gradient">TERMS</span></h1>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg italic">Compliance is mandatory. By using our service, you agree to every protocol listed below.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="terms-card glass p-8 rounded-3xl">
-                    <i class="fa-solid fa-shield-halved text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">Safety Commitment</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Safety is our top priority. We enforce strict safeguards to keep the platform secure, uphold standards, and maintain trust and satisfaction for everyone.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
+                    <i class="fa-solid fa-shield-halved text-4xl accent-red mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">Safety Protocol</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">We utilize enterprise-grade security to ensure every transaction is logged, verified, and protected against external threats.</p>
                 </div>
 
-                <div class="terms-card glass p-8 rounded-3xl border-red-500/30">
-                    <i class="fa-solid fa-user-slash text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide text-red-400">Digital Fraud Policy</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed font-semibold">Zero-tolerance for fraud. We comply with all laws and do not accept illicit funds. Suspected funds will be frozen/confiscated.</p>
+                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
+                    <i class="fa-solid fa-user-slash text-4xl accent-red mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter text-red-400">Anti-Fraud</h3>
+                    <p class="text-gray-400 text-sm font-bold leading-relaxed">Zero-tolerance for fraud. We comply with AML laws. Suspicious funds will be immediately reported and frozen without exception.</p>
                 </div>
 
-                <div class="terms-card glass p-8 rounded-3xl lg:col-span-2">
-                    <i class="fa-brands fa-paypal text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">PayPal Transactions</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        <span class="text-white font-bold">Friends & Family only.</span> Pay from balance, PayPal card or linked bank. 
-                        No 3rd-party payments (No Refund). No notes. Locked accounts held until release. We do not cover fees.
-                    </p>
+                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 lg:col-span-2">
+                    <div class="flex flex-col md:flex-row gap-10">
+                        <i class="fa-brands fa-paypal text-6xl accent-red"></i>
+                        <div>
+                            <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">PayPal Specifics</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed font-semibold">
+                                <span class="text-white">Friends & Family only.</span> No 3rd party payments. Money sent without confirmation is non-refundable. We do not cover PayPal transaction fees.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="terms-card glass p-8 rounded-3xl">
-                    <i class="fa-brands fa-bitcoin text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">Crypto Transactions</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Send exact amount and currency to the correct address. Mismatches are <span class="text-red-400">not refunded</span>. Gas/blockchain fees are your responsibility.</p>
-                </div>
-
-                <div class="terms-card glass p-8 rounded-3xl">
-                    <i class="fa-solid fa-money-bill-transfer text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">Deal Amounts</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Sending more than agreed? Only agreed amount exchanged. In tickets, extras are treated as <span class="text-green-400 font-bold">Tips</span>.</p>
-                </div>
-
-                <div class="terms-card glass p-8 rounded-3xl border-red-900/50">
-                    <i class="fa-solid fa-handcuffs text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide text-red-400">Chargeback Policy</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Bank or PayPal Goods & Services chargebacks strictly prohibited. Opening a case results in an immediate blacklist and reporting.</p>
-                </div>
-
-                <div class="terms-card glass p-8 rounded-3xl">
-                    <i class="fa-solid fa-triangle-exclamation text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">Risk Disclosure</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Not responsible for trading losses or locked accounts. Account termination during deals requires screen recording proof of ownership.</p>
-                </div>
-
-                <div class="terms-card glass p-8 rounded-3xl lg:col-span-2 bg-red-500/5">
-                    <i class="fa-solid fa-ticket text-3xl accent-red mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide">Ticket Protocols</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed font-bold">DM transactions void refund eligibility. No refunds if money is sent without confirmation or to unclaimed tickets.</p>
+                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
+                    <i class="fa-solid fa-money-bill-transfer text-4xl accent-red mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">Oversending</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Only the agreed amount will be exchanged. Anything sent over the deal limit is considered a <span class="text-emerald-400 font-bold">Tip</span>.</p>
                 </div>
             </div>
             
-            <div class="mt-12 text-center">
-                <button onclick="showPage('home')" class="bg-red-glow px-8 py-4 rounded-xl font-bold hover:scale-105 transition">Back to Exchange</button>
+            <div class="mt-20 text-center">
+                <button onclick="showPage('home')" class="bg-red-glow px-12 py-5 rounded-2xl font-black hover:scale-110 transition-all">I AGREE, BACK TO EXCHANGE</button>
             </div>
         </section>
     </main>
 
-    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 Kaap Exchanges. All rights reserved.</p>
+    <div class="fab">
+        <a href="https://discord.gg/kaapp" target="_blank" class="w-16 h-16 bg-[#5865F2] rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:bg-[#4752c4] transition-all shadow-[#5865F2]/40">
+            <i class="fa-brands fa-discord"></i>
+        </a>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-6 py-16 border-t border-white/5 text-center">
+        <p class="text-gray-500 text-sm font-bold tracking-widest uppercase mb-4">&copy; 2026 KAAP EXCHANGES. POWERED BY EXCELLENCE.</p>
+        <div class="flex justify-center gap-6 text-gray-600">
+            <i class="fa-brands fa-cc-paypal text-2xl"></i>
+            <i class="fa-brands fa-bitcoin text-2xl"></i>
+            <i class="fa-brands fa-ethereum text-2xl"></i>
+            <i class="fa-solid fa-building-columns text-2xl"></i>
+        </div>
     </footer>
 
     <script>
-        /* Page Navigation */
+        /* PAGE NAVIGATION ENGINE */
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + '-page').classList.add('active');
-            window.scrollTo(0,0);
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none';
+            });
+            const activePage = document.getElementById(pageId + '-page');
+            activePage.style.display = 'block';
+            setTimeout(() => activePage.classList.add('active'), 10);
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        /* Crypto Ticker Logic */
+        /* LIVE PRICE ENGINE (COINGECKO) */
         async function fetchPrices() {
             try {
                 const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,solana&vs_currencies=eur');
                 const data = await res.json();
                 const coins = { btc: 'bitcoin', eth: 'ethereum', ltc: 'litecoin', sol: 'solana' };
                 for (const [id, name] of Object.entries(coins)) {
-                    const price = data[name].eur.toLocaleString();
-                    if(document.getElementById(`price-${id}`)) document.getElementById(`price-${id}`).innerText = `${id.toUpperCase()}: €${price}`;
-                    if(document.getElementById(`price-${id}2`)) document.getElementById(`price-${id}2`).innerText = `${id.toUpperCase()}: €${price}`;
+                    const price = data[name].eur.toLocaleString('en-EU', {style: 'currency', currency: 'EUR'});
+                    document.querySelectorAll(`.price-${id}`).forEach(el => el.innerText = `${id.toUpperCase()}: ${price}`);
                 }
-            } catch (e) { console.error("Price fetch failed"); }
+            } catch (e) { console.error("Price Sync Offline"); }
         }
-        setInterval(fetchPrices, 60000);
+        setInterval(fetchPrices, 30000);
         fetchPrices();
 
-        /* UI Helpers */
-        function toggleFAQ(element) { element.classList.toggle('active'); }
-
+        /* THEME TOGGLE */
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
@@ -400,7 +412,7 @@
             icon.classList.toggle('fa-sun');
         });
 
-        /* Calculator Logic */
+        /* EXCHANGE ENGINE */
         const routeFees = {
             'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
             'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
@@ -419,16 +431,81 @@
             const routeKey = `${sendMethod}|${receiveMethod}`;
             const feePercent = routeFees[routeKey] || 0.10;
             let calculatedFee = sendAmt * feePercent;
+            
             const isMinFeeApplied = (sendMethod !== 'crypto' && calculatedFee < MIN_FEE && sendAmt > 0);
             if (sendMethod !== 'crypto') { calculatedFee = Math.max(calculatedFee, MIN_FEE); }
+            
             const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
             document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
             document.getElementById('feeRateDisplay').innerText = `${(feePercent * 100).toFixed(0)}%`;
             document.getElementById('feeCostDisplay').innerText = `€ ${calculatedFee.toFixed(2)}`;
-            document.getElementById('min-fee-alert').style.display = isMinFeeApplied ? 'block' : 'none';
+            document.getElementById('min-fee-alert').classList.toggle('hidden', !isMinFeeApplied);
         }
-        document.querySelectorAll('input, select').forEach(el => { el.addEventListener('input', updateExchange); });
+
+        document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
         updateExchange();
+
+        /* BACKGROUND PARTICLE ENGINE */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(237, 66, 69, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < 60; i++) particles.push(new Particle());
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        initParticles();
+        animate();
+
+        /* FAQ ANIMATION HELPER */
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const content = item.querySelector('.faq-content');
+                const arrow = item.querySelector('.arrow-icon');
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    content.style.maxHeight = '0px';
+                    arrow.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
     </script>
 </body>
 </html>
