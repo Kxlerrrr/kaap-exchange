@@ -52,6 +52,11 @@
         /* FLOATING ACTION BUTTON */
         .fab { position: fixed; bottom: 30px; right: 30px; z-index: 100; transition: 0.3s; }
         .fab:hover { transform: rotate(15deg); }
+
+        /* TERMS SPECIFIC STYLING */
+        .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .policy-card { border-left: 4px solid #ED4245; }
+        .alert-card { background: rgba(237, 66, 69, 0.1) !important; border-left: 4px solid #ff0000; }
     </style>
 </head>
 <body class="antialiased">
@@ -174,7 +179,7 @@
 
                     <div class="grid grid-cols-2 gap-6 pt-4">
                         <div class="glass p-6 rounded-3xl border-none bg-white/5">
-                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Rate Applied</p>
+                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Fee Applied</p>
                             <p id="feeRateDisplay" class="text-2xl font-black text-emerald-400">7%</p>
                         </div>
                         <div class="glass p-6 rounded-3xl border-none bg-white/5">
@@ -232,7 +237,7 @@
                     </div>
                     <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
                         <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
-                            Once your funds are confirmed (1 confirmation for crypto), we process the payout immediately. On average, users receive their funds within **5 to 10 minutes**.
+                            Once your funds are confirmed (1 confirmation for crypto), we process the payout immediately. On average, users receive their funds within 5 to 10 minutes.
                         </p>
                     </div>
                 </div>
@@ -245,7 +250,7 @@
                     </div>
                     <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
                         <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
-                            We don't have a strict minimum amount, but we do apply a **€0.50 minimum fee** on non-crypto transactions to cover our processing costs.
+                            We don't have a strict minimum amount, but we do apply a €0.50 minimum fee on non-crypto transactions to cover our processing costs.
                         </p>
                     </div>
                 </div>
@@ -318,43 +323,85 @@
         <section class="max-w-7xl mx-auto px-6 py-16">
             <div class="text-center mb-20">
                 <h1 class="text-7xl font-black mb-6 uppercase tracking-tighter">LEGAL <span class="text-gradient">TERMS</span></h1>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg italic">Compliance is mandatory. By using our service, you agree to every protocol listed below.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg italic">By using our platform, you agree to the following protocols. Compliance is mandatory.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
-                    <i class="fa-solid fa-shield-halved text-4xl accent-red mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">Safety Protocol</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">We utilize enterprise-grade security to ensure every transaction is logged, verified, and protected against external threats.</p>
+            <div class="terms-grid">
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-shield-heart"></i> Safety Commitment
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Safety is our top priority. We enforce strict safeguards to keep the platform secure, uphold standards, and maintain trust and satisfaction for everyone.</p>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
-                    <i class="fa-solid fa-user-slash text-4xl accent-red mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter text-red-400">Anti-Fraud</h3>
-                    <p class="text-gray-400 text-sm font-bold leading-relaxed">Zero-tolerance for fraud. We comply with AML laws. Suspicious funds will be immediately reported and frozen without exception.</p>
+                <div class="glass p-8 rounded-[30px] policy-card alert-card">
+                    <h3 class="text-xl font-black mb-4 text-red-500 uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-gavel"></i> Digital Fraud Policy
+                    </h3>
+                    <p class="text-gray-300 text-sm leading-relaxed"><strong>Zero-tolerance for fraud.</strong> We comply with all applicable laws and do not accept illicit or unlawfully obtained funds. Funds suspected of fraud may be frozen or confiscated pending investigation.</p>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 lg:col-span-2">
-                    <div class="flex flex-col md:flex-row gap-10">
-                        <i class="fa-brands fa-paypal text-6xl accent-red"></i>
-                        <div>
-                            <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">PayPal Specifics</h3>
-                            <p class="text-gray-400 text-sm leading-relaxed font-semibold">
-                                <span class="text-white">Friends & Family only.</span> No 3rd party payments. Money sent without confirmation is non-refundable. We do not cover PayPal transaction fees.
-                            </p>
-                        </div>
-                    </div>
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-brands fa-paypal"></i> PayPal Transactions
+                    </h3>
+                    <ul class="text-gray-400 text-xs space-y-2">
+                        <li>• <strong class="text-white">Friends & Family only.</strong></li>
+                        <li>• PayPal Balance: Pay from balance. Card/Bank: Use linked account.</li>
+                        <li>• Non-compliant payments rejected <span class="text-red-400 font-bold">without refund</span>.</li>
+                        <li>• Locked accounts: Funds held until released by PayPal.</li>
+                        <li>• <strong class="text-white">No 3rd-party payments:</strong> No refund if used.</li>
+                        <li>• We do not cover or assume responsibility for transaction fees.</li>
+                        <li>• <strong class="text-white">No notes on payments.</strong></li>
+                    </ul>
                 </div>
 
-                <div class="glass p-10 rounded-[40px] border-l-4 border-red-500 hover:scale-105 transition-all">
-                    <i class="fa-solid fa-money-bill-transfer text-4xl accent-red mb-6"></i>
-                    <h3 class="text-2xl font-black mb-4 uppercase tracking-tighter">Oversending</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Only the agreed amount will be exchanged. Anything sent over the deal limit is considered a <span class="text-emerald-400 font-bold">Tip</span>.</p>
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-bitcoin-sign"></i> Crypto Transactions
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Send the <strong>exact amount, currency, and to the correct address</strong>. Mismatches are rejected and not refunded. Gas/blockchain fees are your responsibility.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> Deal & Ticket Policy
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4"><strong>Deal Amount:</strong> If you send more than agreed, only the agreed amount is exchanged. Excess is at the exchanger's discretion.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed"><strong>Ticket Amount:</strong> Extra funds sent beyond the ticket stated amount are treated as a <span class="text-emerald-400 font-bold">TIP</span>.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-user-xmark"></i> Account Termination
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">If your account is terminated during a deal, you must provide verifiable proof (e.g., a screen recording) showing the account belongs to you.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[30px] policy-card alert-card lg:col-span-2">
+                    <h3 class="text-xl font-black mb-4 text-red-500 uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-ban"></i> Chargeback Policy
+                    </h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">Chargebacks via your bank or using PayPal "Goods & Services" are <strong>strictly prohibited</strong>. Opening a PayPal case results in loss of access to our services and immediate reporting.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[30px] policy-card">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Risk Disclosure
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">We are not responsible for trading losses or for accounts being restricted or locked. Interacting with scammers makes you solely accountable.</p>
+                </div>
+
+                <div class="glass p-8 rounded-[30px] policy-card lg:col-span-3">
+                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
+                        <i class="fa-solid fa-ticket"></i> Ticket Dealing
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed"><strong>Transactions done in DMs void any refund eligibility.</strong> No refunds if the ticket is unclaimed by staff or if money is sent without confirmation.</p>
                 </div>
             </div>
             
             <div class="mt-20 text-center">
-                <button onclick="showPage('home')" class="bg-red-glow px-12 py-5 rounded-2xl font-black hover:scale-110 transition-all">I AGREE, BACK TO EXCHANGE</button>
+                <button onclick="showPage('home')" class="bg-red-glow px-12 py-5 rounded-2xl font-black hover:scale-110 transition-all uppercase">I Agree, Return to Exchange</button>
             </div>
         </section>
     </main>
@@ -416,7 +463,7 @@
         const routeFees = {
             'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
             'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
-            'crypto|paypal': 0.02, 'crypto|tikkie': 0.02, 'crypto|bank': 0.02, 'crypto|revolut': 0.02, 'crypto|paysafe': 0.02, 'crypto|skrill': 0.02, 'crypto|crypto': 0.05,
+            'crypto|paypal': 0.02, 'crypto|tikkie': 0.02, 'crypto|bank': 0.02, 'crypto|revolut': 0.02, 'crypto|paysafe': 0.02, 'crypto|skrill': 0.02, 'crypto|crypto': 0.02,
             'bank|paypal': 0.05, 'bank|crypto': 0.07, 'bank|tikkie': 0.05, 'bank|revolut': 0.05, 'bank|paysafe': 0.10, 'bank|skrill': 0.10, 'bank|bank': 0.10,
             'skrill|paypal': 0.10, 'skrill|crypto': 0.10, 'skrill|tikkie': 0.10, 'skrill|revolut': 0.10, 'skrill|bank': 0.10, 'skrill|paysafe': 0.10, 'skrill|skrill': 0.10,
             'paysafe|paypal': 0.10, 'paysafe|crypto': 0.10, 'paysafe|tikkie': 0.10, 'paysafe|revolut': 0.10, 'paysafe|skrill': 0.10, 'paysafe|bank': 0.10, 'paysafe|paysafe': 0.10,
