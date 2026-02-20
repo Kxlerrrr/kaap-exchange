@@ -3,63 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaap Exchanges | The Gold Standard</title>
+    <title>Kaap Exchanges | The Gold Standard 2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
         
         /* THEMES & CORE */
-        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1); overflow-x: hidden; }
-        body.light-mode { background: #f3f4f6; color: #111827; }
-        body.light-mode .glass { background: rgba(255, 255, 255, 0.7); border-color: rgba(0,0,0,0.1); color: #111827; }
-        body.light-mode .bg-neutral-900 { background: #ffffff !important; color: #111827 !important; border: 1px solid #ddd; }
+        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s ease; overflow-x: hidden; }
+        body.light-mode { background: #f8fafc; color: #0f172a; }
+        body.light-mode .glass { background: rgba(255, 255, 255, 0.8); border-color: rgba(0,0,0,0.05); color: #1e293b; }
+        body.light-mode .bg-neutral-900 { background: #ffffff !important; color: #1e293b !important; border: 1px solid #e2e8f0; }
         
         /* CRAZY ANIMATED BACKGROUND */
-        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.4; }
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.3; }
 
         /* GLASSMORPHISM UPGRADES */
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); transition: all 0.3s ease; }
-        .glass:hover { border-color: rgba(237, 66, 69, 0.4); box-shadow: 0 8px 32px 0 rgba(237, 66, 69, 0.1); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass:hover { border-color: rgba(237, 66, 69, 0.4); transform: translateY(-5px); }
 
         .accent-red { color: #ED4245; }
-        .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.5); border: none; }
-        .bg-red-glow:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(237, 66, 69, 0.7); }
+        .bg-red-glow { background: #ED4245; box-shadow: 0 0 30px rgba(237, 66, 69, 0.4); border: none; color: white; }
+        .bg-red-glow:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(237, 66, 69, 0.6); }
         .text-gradient { background: linear-gradient(135deg, #ED4245 0%, #ff8a8a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* FIXED TICKER ANIMATION */
-        .ticker-wrapper { 
-            overflow: hidden; 
-            white-space: nowrap; 
-            background: rgba(237, 66, 69, 0.08); 
-            border-bottom: 1px solid rgba(237, 66, 69, 0.2);
-            position: relative;
-            width: 100%;
-        }
-        .ticker-content { 
-            display: inline-flex; 
-            animation: scroll-left 40s linear infinite; 
-            padding-left: 100%; /* Ensures it starts from the far right */
-        }
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-        .ticker-item {
-            flex-shrink: 0;
-            padding: 0 40px;
-        }
+        /* TICKER ANIMATION */
+        .ticker-wrapper { overflow: hidden; white-space: nowrap; background: rgba(237, 66, 69, 0.05); border-bottom: 1px solid rgba(237, 66, 69, 0.1); }
+        .ticker-content { display: inline-flex; animation: scroll-left 40s linear infinite; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-item { flex-shrink: 0; padding: 0 40px; }
         
         /* PAGE TRANSITIONS */
-        .page { display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+        .page { display: none; opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .page.active { display: block; opacity: 1; transform: translateY(0); }
 
         /* TEAM CARDS 2.0 */
-        .team-card { position: relative; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .team-card:hover { transform: translateY(-15px) rotateX(5deg) rotateY(5deg); }
-        .avatar-container { position: relative; width: 110px; height: 110px; margin: 0 auto 1.5rem; }
-        .avatar-ring { position: absolute; inset: -8px; border: 2px dashed #ED4245; border-radius: 50%; animation: spin 10s linear infinite; opacity: 0.3; }
+        .team-card { position: relative; overflow: hidden; }
+        .avatar-container { position: relative; width: 120px; height: 120px; margin: 0 auto 1.5rem; }
+        .avatar-ring { position: absolute; inset: -10px; border: 2px solid #ED4245; border-radius: 50%; border-style: dashed; animation: spin 12s linear infinite; opacity: 0.4; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* PULSING STATUS DOT */
@@ -67,19 +49,28 @@
         .status-online { background: #10b981; box-shadow: 0 0 10px #10b981; }
         .status-online::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #10b981; animation: ping 1.5s infinite; }
 
-        /* FLOATING ACTION BUTTON */
-        .fab { position: fixed; bottom: 30px; right: 30px; z-index: 100; transition: 0.3s; }
-        .fab:hover { transform: rotate(15deg); }
+        /* TRUST NOTIFICATION */
+        #trust-toast { position: fixed; bottom: 30px; left: 30px; z-index: 1000; display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 16px; background: rgba(15, 15, 15, 0.9); border: 1px solid rgba(237, 66, 69, 0.3); opacity: 0; transform: translateX(-100px); transition: 0.5s ease; }
+        #trust-toast.show { opacity: 1; transform: translateX(0); }
 
         /* TERMS SPECIFIC STYLING */
-        .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .policy-card { border-left: 4px solid #ED4245; }
-        .alert-card { background: rgba(237, 66, 69, 0.1) !important; border-left: 4px solid #ff0000; }
+        .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .policy-card { border-top: 3px solid #ED4245; }
     </style>
 </head>
 <body class="antialiased">
 
     <canvas id="particle-canvas"></canvas>
+
+    <div id="trust-toast" class="glass">
+        <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center text-green-500">
+            <i class="fa-solid fa-check-double"></i>
+        </div>
+        <div>
+            <p class="text-[10px] font-bold text-gray-500 uppercase">Recent Exchange</p>
+            <p id="trust-text" class="text-xs font-black">Someone swapped €250 -> LTC</p>
+        </div>
+    </div>
 
     <div class="ticker-wrapper py-3">
         <div class="ticker-content text-[10px] font-extrabold uppercase tracking-[0.2em] items-center" id="crypto-ticker">
@@ -99,69 +90,67 @@
             <div class="w-12 h-12 bg-red-glow rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-[360deg] duration-700">
                 <i class="fa-solid fa-bolt-lightning text-white text-xl"></i>
             </div>
-            <span class="text-2xl font-extrabold tracking-tighter uppercase">KAAP <span class="accent-red">EXCHANGES</span></span>
+            <span class="text-2xl font-black tracking-tighter uppercase">KAAP <span class="accent-red">EXCHANGES</span></span>
         </div>
-        <div class="hidden md:flex gap-10 text-sm font-bold text-gray-400 items-center">
-            <button onclick="showPage('home')" class="hover:text-white hover:accent-red transition-all">Exchange</button>
-            <button onclick="showPage('terms')" class="hover:text-white hover:accent-red transition-all">Terms</button>
+        <div class="hidden md:flex gap-8 text-[12px] font-black uppercase tracking-widest text-gray-400 items-center">
+            <button onclick="showPage('home')" class="hover:text-white transition-all">Exchange</button>
+            <button onclick="showPage('terms')" class="hover:text-white transition-all">Terms</button>
             <a href="#vouch-section" class="hover:text-white transition-all">Vouches</a>
-            <a href="#faq" class="hover:text-white transition-all">FAQ</a>
             <a href="#team" class="hover:text-white transition-all">Team</a>
-            <button id="theme-toggle" class="glass w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-all">
-                <i class="fa-solid fa-moon text-lg"></i>
+            <button id="theme-toggle" class="glass w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition-all">
+                <i class="fa-solid fa-moon"></i>
             </button>
         </div>
         <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2">
-            <i class="fa-brands fa-discord"></i> Join Discord
+            <i class="fa-brands fa-discord"></i> <span class="hidden sm:inline">Join Discord</span>
         </a>
     </nav>
 
     <main id="home-page" class="page active">
         <section class="max-w-7xl mx-auto px-6 pt-16 pb-24 grid lg:grid-cols-2 gap-20 items-center">
-            <div class="relative">
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-xs font-black text-red-400 mb-8 uppercase tracking-[0.2em]">
+            <div>
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-black text-red-400 mb-8 uppercase tracking-[0.2em]">
                     <div class="status-dot status-online"></div>
-                    Servers Online & Secure
+                    System Operational: 99.9% Uptime
                 </div>
-                <h1 class="text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
-                    IN KAAP <br><span class="text-gradient">WE TRUST.</span>
+                <h1 class="text-7xl md:text-8xl font-black mb-6 leading-[0.9] tracking-tighter">
+                    ELITE <br><span class="text-gradient">EXCHANGES.</span>
                 </h1>
-                <p class="text-gray-400 text-xl leading-relaxed mb-10 max-w-lg">
-                    Experience the next generation of asset swapping. Automated calculations, verified security, and lightning-fast delivery.
+                <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-lg">
+                    Swap assets instantly with Europe's most trusted manual exchange service. Fast, private, and secure.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-6 items-center">
-                    <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-12 py-6 rounded-2xl font-black text-xl hover:scale-105 transition-all w-full sm:w-auto text-center">
-                        OPEN TICKET
+                    <a href="https://discord.gg/kaapp" target="_blank" class="bg-red-glow px-12 py-6 rounded-2xl font-black text-xl hover:scale-105 transition-all w-full sm:w-auto text-center uppercase">
+                        Open a Ticket
                     </a>
                     <div class="flex items-center gap-4">
                         <div class="flex -space-x-3">
-                            <img src="https://ui-avatars.com/api/?name=1&bg=ED4245" class="w-12 h-12 rounded-full border-4 border-black">
-                            <img src="https://ui-avatars.com/api/?name=2&bg=222" class="w-12 h-12 rounded-full border-4 border-black">
-                            <img src="https://ui-avatars.com/api/?name=3&bg=ED4245" class="w-12 h-12 rounded-full border-4 border-black">
+                            <img src="https://ui-avatars.com/api/?name=K&bg=ED4245&color=fff" class="w-12 h-12 rounded-full border-4 border-[#050505]">
+                            <img src="https://ui-avatars.com/api/?name=S&bg=222&color=fff" class="w-12 h-12 rounded-full border-4 border-[#050505]">
+                            <img src="https://ui-avatars.com/api/?name=A&bg=ED4245&color=fff" class="w-12 h-12 rounded-full border-4 border-[#050505]">
                         </div>
                         <div>
                             <p class="text-white font-bold text-lg">3,500+</p>
-                            <p class="text-xs text-gray-500 uppercase font-black">Successful Deals</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Completed Deals</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass p-12 rounded-[50px] relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 blur-[60px] group-hover:bg-red-500/20 transition-all"></div>
-                <h3 class="text-3xl font-black mb-10 flex items-center gap-4">
-                    <i class="fa-solid fa-wand-magic-sparkles accent-red"></i> Swap Engine
-                </h3>
-                <div class="space-y-8">
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-end">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-gray-500">Amount to send</label>
-                            <span id="min-fee-alert" class="text-[10px] bg-red-500/20 text-red-400 px-2 py-1 rounded-md font-bold hidden">€0.50 MIN FEE</span>
-                        </div>
+            <div class="glass p-8 md:p-12 rounded-[40px] relative overflow-hidden">
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="text-2xl font-black flex items-center gap-3">
+                        <i class="fa-solid fa-calculator accent-red"></i> Rate Calculator
+                    </h3>
+                    <span id="min-fee-alert" class="text-[9px] bg-red-500/20 text-red-400 px-3 py-1 rounded-full font-black hidden uppercase">€0.50 Min Fee Applied</span>
+                </div>
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-2">You Send</label>
                         <div class="relative">
-                            <input type="number" id="sendAmount" value="100.00" class="w-full bg-white/5 border-2 border-white/5 p-8 rounded-3xl text-4xl font-black focus:outline-none focus:border-red-500/50 transition-all">
-                            <select id="sendMethod" class="absolute right-4 top-4 bottom-4 bg-neutral-900 rounded-2xl px-6 font-black text-sm outline-none border border-white/10">
+                            <input type="number" id="sendAmount" value="100" class="w-full bg-white/5 border-2 border-white/5 p-6 rounded-2xl text-3xl font-black focus:outline-none focus:border-red-500/30 transition-all">
+                            <select id="sendMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 rounded-xl px-4 font-black text-xs outline-none border border-white/10">
                                 <option value="paypal">PayPal</option>
                                 <option value="crypto">Crypto</option>
                                 <option value="tikkie">Tikkie</option>
@@ -173,17 +162,17 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-center -my-4 relative z-10">
-                        <div class="w-12 h-12 bg-neutral-900 border-2 border-red-500/30 rounded-full flex items-center justify-center rotate-0 hover:rotate-180 transition-all duration-500 cursor-pointer">
-                            <i class="fa-solid fa-repeat accent-red"></i>
+                    <div class="flex justify-center -my-3">
+                        <div class="w-10 h-10 bg-neutral-900 border border-white/10 rounded-full flex items-center justify-center z-10">
+                            <i class="fa-solid fa-arrow-down accent-red text-sm"></i>
                         </div>
                     </div>
 
-                    <div class="space-y-3">
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-500">Amount to receive</label>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-2">You Receive</label>
                         <div class="relative">
-                            <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border-2 border-white/5 p-8 rounded-3xl text-4xl font-black text-red-400 focus:outline-none">
-                            <select id="receiveMethod" class="absolute right-4 top-4 bottom-4 bg-neutral-900 rounded-2xl px-6 font-black text-sm outline-none border border-white/10">
+                            <input type="text" id="receiveAmount" readonly class="w-full bg-white/5 border-2 border-white/5 p-6 rounded-2xl text-3xl font-black text-red-400 focus:outline-none">
+                            <select id="receiveMethod" class="absolute right-3 top-3 bottom-3 bg-neutral-900 rounded-xl px-4 font-black text-xs outline-none border border-white/10">
                                 <option value="paypal">PayPal</option>
                                 <option value="crypto" selected>Crypto</option>
                                 <option value="tikkie">Tikkie</option>
@@ -195,14 +184,14 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-6 pt-4">
-                        <div class="glass p-6 rounded-3xl border-none bg-white/5">
-                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Fee Applied</p>
-                            <p id="feeRateDisplay" class="text-2xl font-black text-emerald-400">7%</p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-black text-gray-500 uppercase mb-1">Fee Tier</p>
+                            <p id="feeRateDisplay" class="text-xl font-black text-emerald-400">7%</p>
                         </div>
-                        <div class="glass p-6 rounded-3xl border-none bg-white/5">
-                            <p class="text-[10px] font-black text-gray-500 uppercase mb-2">Service Fee</p>
-                            <p id="feeCostDisplay" class="text-2xl font-black text-red-400">€7.00</p>
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                            <p class="text-[9px] font-black text-gray-500 uppercase mb-1">Fee Total</p>
+                            <p id="feeCostDisplay" class="text-xl font-black text-red-400">€7.00</p>
                         </div>
                     </div>
                 </div>
@@ -210,128 +199,90 @@
         </section>
 
         <section id="vouch-section" class="max-w-7xl mx-auto px-6 py-20">
-            <div class="glass p-12 rounded-[50px] border-none bg-gradient-to-r from-red-500/5 to-transparent relative overflow-hidden">
-                <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
-                    <div class="max-w-md">
-                        <h3 class="text-4xl font-black mb-4 italic uppercase tracking-tighter">Verified <span class="accent-red">Vouches</span></h3>
-                        <p class="text-gray-400 mb-6">Our reputation is built on transparency. Join 5000+ users who trust Kaap Exchanges.</p>
-                        <a href="https://discord.gg/kaapp" class="text-red-400 font-bold flex items-center gap-2 hover:gap-4 transition-all">
-                            View all 3,500+ vouches <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                    <div class="flex gap-6 overflow-x-auto pb-4 w-full">
-                        <div class="min-w-[320px] glass p-8 rounded-3xl relative">
-                            <i class="fa-solid fa-quote-left absolute top-4 left-4 opacity-10 text-4xl"></i>
-                            <p class="italic text-gray-300 text-lg mb-6 leading-relaxed">"I just exchanged €10 Litecoin to Tikkie, no issues at all!"</p>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center font-bold">M</div>
-                                <p class="font-black accent-red">Thomas</p>
-                            </div>
-                        </div>
-                        <div class="min-w-[320px] glass p-8 rounded-3xl relative">
-                            <i class="fa-solid fa-quote-left absolute top-4 left-4 opacity-10 text-4xl"></i>
-                            <p class="italic text-gray-300 text-lg mb-6 leading-relaxed">"Best fees in the scene. PayPal to LTC was done in under 5 minutes."</p>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold">A</div>
-                                <p class="font-black accent-red">Aribakos</p>
-                            </div>
+            <div class="glass p-10 rounded-[40px] border-none bg-gradient-to-br from-red-500/5 to-transparent">
+                <div class="grid lg:grid-cols-3 gap-10 items-center">
+                    <div class="lg:col-span-1">
+                        <h3 class="text-3xl font-black mb-4 uppercase tracking-tighter italic">Client <span class="accent-red">Feedback</span></h3>
+                        <p class="text-gray-400 text-sm mb-6">Our speed and reliability speak for themselves. Check our Discord for the full history of success.</p>
+                        <div class="flex items-center gap-2 text-yellow-500 mb-4">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <span class="text-white font-bold ml-2">5.0</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="faq" class="max-w-4xl mx-auto px-6 py-24">
-            <div class="text-center mb-16">
-                <h2 class="text-5xl font-black uppercase tracking-tighter mb-4">Questions? <span class="text-gradient">Answers.</span></h2>
-            </div>
-            <div class="grid gap-4">
-                <div class="faq-item glass p-8 rounded-3xl cursor-pointer hover:bg-white/5 transition-all group" onclick="this.classList.toggle('active')">
-                    <div class="flex justify-between items-center">
-                        <h4 class="text-xl font-bold group-hover:accent-red transition-colors">How long does an exchange take?</h4>
-                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 arrow-icon">
-                            <i class="fa-solid fa-chevron-down"></i>
+                    <div class="lg:col-span-2 flex gap-6 overflow-x-auto pb-6">
+                        <div class="min-w-[300px] bg-black/40 p-6 rounded-3xl border border-white/5">
+                            <p class="italic text-gray-300 text-sm mb-4">"Instant payout as always. Best rates for PayPal to LTC."</p>
+                            <p class="font-black text-xs accent-red">@Daan.V</p>
                         </div>
-                    </div>
-                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
-                        <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
-                            Once your funds are confirmed (1 confirmation for crypto), we process the payout immediately. On average, users receive their funds within 5 to 10 minutes.
-                        </p>
-                    </div>
-                </div>
-                <div class="faq-item glass p-8 rounded-3xl cursor-pointer hover:bg-white/5 transition-all group" onclick="this.classList.toggle('active')">
-                    <div class="flex justify-between items-center">
-                        <h4 class="text-xl font-bold group-hover:accent-red transition-colors">Is there a minimum exchange amount?</h4>
-                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 arrow-icon">
-                            <i class="fa-solid fa-chevron-down"></i>
+                        <div class="min-w-[300px] bg-black/40 p-6 rounded-3xl border border-white/5">
+                            <p class="italic text-gray-300 text-sm mb-4">"Exchanged €500 Bank to Crypto. Smooth process, 10 mins total."</p>
+                            <p class="font-black text-xs accent-red">@Zenox</p>
                         </div>
-                    </div>
-                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-500">
-                        <p class="pt-6 text-gray-400 leading-relaxed border-t border-white/5 mt-6">
-                            We don't have a strict minimum amount, but we do apply a €0.50 minimum fee on non-crypto transactions to cover our processing costs.
-                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="team" class="max-w-7xl mx-auto px-6 py-24">
-            <div class="text-center mb-20">
-                <p class="text-red-500 font-black uppercase tracking-[0.4em] text-xs mb-4">Our Elite Staff</p>
-                <h2 class="text-6xl font-black mb-4 tracking-tighter">THE <span class="text-gradient">OPERATORS</span></h2>
+            <div class="text-center mb-16">
+                <p class="text-red-500 font-black uppercase tracking-[0.4em] text-[10px] mb-2">Verified Exchangers</p>
+                <h2 class="text-5xl font-black tracking-tighter">THE <span class="text-gradient">TEAM</span></h2>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="glass p-10 rounded-[50px] text-center team-card border-red-500/20 bg-gradient-to-b from-red-500/5 to-transparent">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="glass p-8 rounded-[40px] text-center team-card bg-gradient-to-b from-red-500/10 to-transparent">
                     <div class="avatar-container">
                         <div class="avatar-ring" style="opacity: 1;"></div>
-                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20 shadow-lg"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kxlerrrr&backgroundColor=ED4245" class="rounded-full w-full h-full object-cover relative z-10 shadow-2xl">
+                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Kxlerrrr&backgroundColor=ED4245" class="rounded-full w-full h-full relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-1 flex items-center justify-center gap-2">Kxlerrrr <i class="fa-solid fa-crown text-yellow-500 text-sm"></i></h4>
-                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-red-500 mb-6">Founder & CEO</p>
-                    <a href="https://discord.com/users/1432460080007221308" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
-                        <i class="fa-brands fa-discord"></i> Profile
-                    </a>
+                    <h4 class="text-xl font-black mb-1">Kxlerrrr</h4>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-red-500 mb-6">CEO & Founder</p>
+                    <a href="https://discord.com/users/1432460080007221308" target="_blank" class="w-full py-2 bg-white/5 rounded-xl block text-[10px] font-black hover:bg-white/10 transition-all uppercase">Profile</a>
                 </div>
 
-                <div class="glass p-10 rounded-[50px] text-center team-card">
+                <div class="glass p-8 rounded-[40px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Keandro&backgroundColor=333" class="rounded-full w-full h-full object-cover relative z-10">
+                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Keandro&backgroundColor=333" class="rounded-full w-full h-full relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-1">Keandro</h4>
-                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Head Exchanger</p>
-                    <a href="https://discord.com/users/1394116532958789766" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
-                        <i class="fa-brands fa-discord"></i> Profile
-                    </a>
+                    <h4 class="text-xl font-black mb-1">Keandro</h4>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-6">Head Exchanger</p>
+                    <a href="https://discord.com/users/1394116532958789766" target="_blank" class="w-full py-2 bg-white/5 rounded-xl block text-[10px] font-black hover:bg-white/10 transition-all uppercase">Profile</a>
                 </div>
 
-                <div class="glass p-10 rounded-[50px] text-center team-card">
+                <div class="glass p-8 rounded-[40px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-amber-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Notzen&backgroundColor=555" class="rounded-full w-full h-full object-cover relative z-10">
+                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-amber-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Smokesessie&backgroundColor=ED4245" class="rounded-full w-full h-full relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-1">Notzen</h4>
-                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Junior Exchanger</p>
-                    <a href="https://discord.com/users/495932495586394122" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
-                        <i class="fa-brands fa-discord"></i> Profile
-                    </a>
+                    <h4 class="text-xl font-black mb-1">Smokesessie</h4>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-6">Exchanger</p>
+                    <a href="https://discord.com/users/1356686777456529448" target="_blank" class="w-full py-2 bg-white/5 rounded-xl block text-[10px] font-black hover:bg-white/10 transition-all uppercase">Profile</a>
                 </div>
 
-                <div class="glass p-10 rounded-[50px] text-center team-card">
+                <div class="glass p-8 rounded-[40px] text-center team-card">
                     <div class="avatar-container">
                         <div class="avatar-ring"></div>
-                        <div class="absolute -right-1 bottom-2 w-7 h-7 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Blaze&backgroundColor=777" class="rounded-full w-full h-full object-cover relative z-10">
+                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-amber-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Notzen&backgroundColor=555" class="rounded-full w-full h-full relative z-10">
                     </div>
-                    <h4 class="text-2xl font-black mb-1">Blaze</h4>
-                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-6">Junior Exchanger</p>
-                    <a href="https://discord.com/users/1467244391146983497" target="_blank" class="w-full py-3 glass rounded-xl inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-all font-bold text-sm">
-                        <i class="fa-brands fa-discord"></i> Profile
-                    </a>
+                    <h4 class="text-xl font-black mb-1">Notzen</h4>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-6">Junior Exchanger</p>
+                    <a href="https://discord.com/users/495932495586394122" target="_blank" class="w-full py-2 bg-white/5 rounded-xl block text-[10px] font-black hover:bg-white/10 transition-all uppercase">Profile</a>
+                </div>
+
+                <div class="glass p-8 rounded-[40px] text-center team-card">
+                    <div class="avatar-container">
+                        <div class="avatar-ring"></div>
+                        <div class="absolute -right-1 bottom-2 w-6 h-6 bg-emerald-500 border-4 border-[#050505] rounded-full z-20"></div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Blaze&backgroundColor=777" class="rounded-full w-full h-full relative z-10">
+                    </div>
+                    <h4 class="text-xl font-black mb-1">Blaze</h4>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-6">Junior Exchanger</p>
+                    <a href="https://discord.com/users/1467244391146983497" target="_blank" class="w-full py-2 bg-white/5 rounded-xl block text-[10px] font-black hover:bg-white/10 transition-all uppercase">Profile</a>
                 </div>
             </div>
         </section>
@@ -339,108 +290,78 @@
 
     <main id="terms-page" class="page">
         <section class="max-w-7xl mx-auto px-6 py-16">
-            <div class="text-center mb-20">
-                <h1 class="text-7xl font-black mb-6 uppercase tracking-tighter">LEGAL <span class="text-gradient">TERMS</span></h1>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg italic">By using our platform, you agree to the following protocols. Compliance is mandatory.</p>
+            <div class="text-center mb-16">
+                <h1 class="text-6xl font-black mb-4 uppercase tracking-tighter">PROTOCOLS & <span class="text-gradient">TERMS</span></h1>
+                <p class="text-gray-400 max-w-xl mx-auto text-sm italic">By interacting with our staff or services, you automatically agree to these terms.</p>
             </div>
 
             <div class="terms-grid">
                 <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-shield-heart"></i> Safety Commitment
+                    <h3 class="text-lg font-black mb-4 accent-red uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> Safety Protocol
                     </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Safety is our top priority. We enforce strict safeguards to keep the platform secure, uphold standards, and maintain trust and satisfaction for everyone.</p>
+                    <p class="text-gray-400 text-xs leading-relaxed">We prioritize the security of all participants. We reserve the right to refuse service to any individual suspected of malicious intent or fraudulent behavior.</p>
                 </div>
 
-                <div class="glass p-8 rounded-[30px] policy-card alert-card">
-                    <h3 class="text-xl font-black mb-4 text-red-500 uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-gavel"></i> Digital Fraud Policy
+                <div class="glass p-8 rounded-[30px] border-red-500 bg-red-500/5">
+                    <h3 class="text-lg font-black mb-4 text-red-500 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-ban"></i> Fraud Policy
                     </h3>
-                    <p class="text-gray-300 text-sm leading-relaxed"><strong>Zero-tolerance for fraud.</strong> We comply with all applicable laws and do not accept illicit or unlawfully obtained funds. Funds suspected of fraud may be frozen or confiscated pending investigation.</p>
+                    <p class="text-gray-300 text-xs leading-relaxed font-bold">Zero tolerance. We do not accept illicit funds. Any funds linked to criminal activity will be frozen and reported to the relevant authorities immediately.</p>
                 </div>
 
                 <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-brands fa-paypal"></i> PayPal Transactions
+                    <h3 class="text-lg font-black mb-4 accent-red uppercase flex items-center gap-2">
+                        <i class="fa-brands fa-paypal"></i> PayPal Rules
                     </h3>
-                    <ul class="text-gray-400 text-xs space-y-2">
-                        <li>• <strong class="text-white">Friends & Family only.</strong></li>
-                        <li>• PayPal Balance: Pay from balance. Card/Bank: Use linked account.</li>
-                        <li>• Non-compliant payments rejected <span class="text-red-400 font-bold">without refund</span>.</li>
-                        <li>• Locked accounts: Funds held until released by PayPal.</li>
-                        <li>• <strong class="text-white">No 3rd-party payments:</strong> No refund if used.</li>
-                        <li>• We do not cover or assume responsibility for transaction fees.</li>
-                        <li>• <strong class="text-white">No notes on payments.</strong></li>
+                    <ul class="text-gray-400 text-[11px] space-y-2">
+                        <li>• <strong class="text-white uppercase">Friends & Family Only.</strong></li>
+                        <li>• No notes on payments under any circumstances.</li>
+                        <li>• No 3rd-party payments (payment must match your identity).</li>
+                        <li>• Payments via "Goods & Services" result in no refund and a ban.</li>
                     </ul>
                 </div>
 
                 <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-bitcoin-sign"></i> Crypto Transactions
+                    <h3 class="text-lg font-black mb-4 accent-red uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Transaction Speed
                     </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Send the <strong>exact amount, currency, and to the correct address</strong>. Mismatches are rejected and not refunded. Gas/blockchain fees are your responsibility.</p>
+                    <p class="text-gray-400 text-xs leading-relaxed">Average completion time is 5-15 minutes after confirmation. Crypto swaps require at least 1 confirmation on the blockchain before payout.</p>
                 </div>
 
                 <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-hand-holding-dollar"></i> Deal & Ticket Policy
+                    <h3 class="text-lg font-black mb-4 accent-red uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-money-bill-transfer"></i> Refund Policy
                     </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4"><strong>Deal Amount:</strong> If you send more than agreed, only the agreed amount is exchanged. Excess is at the exchanger's discretion.</p>
-                    <p class="text-gray-400 text-sm leading-relaxed"><strong>Ticket Amount:</strong> Extra funds sent beyond the ticket stated amount are treated as a <span class="text-emerald-400 font-bold">TIP</span>.</p>
+                    <p class="text-gray-400 text-xs leading-relaxed">Refunds are only issued if the exchange cannot be completed by our team. If you send the wrong amount or to the wrong address, funds are lost.</p>
                 </div>
 
                 <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-user-xmark"></i> Account Termination
+                    <h3 class="text-lg font-black mb-4 accent-red uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-headset"></i> Support
                     </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">If your account is terminated during a deal, you must provide verifiable proof (e.g., a screen recording) showing the account belongs to you.</p>
-                </div>
-
-                <div class="glass p-8 rounded-[30px] policy-card alert-card lg:col-span-2">
-                    <h3 class="text-xl font-black mb-4 text-red-500 uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-ban"></i> Chargeback Policy
-                    </h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">Chargebacks via your bank or using PayPal "Goods & Services" are <strong>strictly prohibited</strong>. Opening a PayPal case results in loss of access to our services and immediate reporting.</p>
-                </div>
-
-                <div class="glass p-8 rounded-[30px] policy-card">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Risk Disclosure
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">We are not responsible for trading losses or for accounts being restricted or locked. Interacting with scammers makes you solely accountable.</p>
-                </div>
-
-                <div class="glass p-8 rounded-[30px] policy-card lg:col-span-3">
-                    <h3 class="text-xl font-black mb-4 accent-red uppercase tracking-tighter flex items-center gap-2">
-                        <i class="fa-solid fa-ticket"></i> Ticket Dealing
-                    </h3>
-                    <p class="text-gray-400 text-sm leading-relaxed"><strong>Transactions done in DMs void any refund eligibility.</strong> No refunds if the ticket is unclaimed by staff or if money is sent without confirmation.</p>
+                    <p class="text-gray-400 text-xs leading-relaxed">Support is exclusively handled via our Discord ticket system. Do not send funds to anyone claiming to be staff in DMs.</p>
                 </div>
             </div>
             
-            <div class="mt-20 text-center">
-                <button onclick="showPage('home')" class="bg-red-glow px-12 py-5 rounded-2xl font-black hover:scale-110 transition-all uppercase">I Agree, Return to Exchange</button>
+            <div class="mt-16 text-center">
+                <button onclick="showPage('home')" class="bg-red-glow px-10 py-4 rounded-xl font-black hover:scale-105 transition-all uppercase text-xs">I Understand, Let's Swap</button>
             </div>
         </section>
     </main>
 
-    <div class="fab">
-        <a href="https://discord.gg/kaapp" target="_blank" class="w-16 h-16 bg-[#5865F2] rounded-full flex items-center justify-center text-white text-3xl shadow-2xl hover:bg-[#4752c4] transition-all shadow-[#5865F2]/40">
-            <i class="fa-brands fa-discord"></i>
-        </a>
-    </div>
-
-    <footer class="max-w-7xl mx-auto px-6 py-16 border-t border-white/5 text-center">
-        <p class="text-gray-500 text-sm font-bold tracking-widest uppercase mb-4">&copy; 2026 KAAP EXCHANGES. POWERED BY EXCELLENCE.</p>
-        <div class="flex justify-center gap-6 text-gray-600">
-            <i class="fa-brands fa-cc-paypal text-2xl"></i>
-            <i class="fa-brands fa-bitcoin text-2xl"></i>
-            <i class="fa-brands fa-ethereum text-2xl"></i>
-            <i class="fa-solid fa-building-columns text-2xl"></i>
+    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-[10px] font-black tracking-[0.3em] uppercase mb-4">&copy; 2026 KAAP EXCHANGES | ALL RIGHTS RESERVED</p>
+        <div class="flex justify-center gap-8 text-gray-700">
+            <i class="fa-brands fa-cc-paypal hover:text-white transition-colors cursor-pointer"></i>
+            <i class="fa-brands fa-bitcoin hover:text-white transition-colors cursor-pointer"></i>
+            <i class="fa-brands fa-ethereum hover:text-white transition-colors cursor-pointer"></i>
+            <i class="fa-solid fa-building-columns hover:text-white transition-colors cursor-pointer"></i>
         </div>
     </footer>
 
     <script>
+        // NAVIGATION
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => {
                 p.classList.remove('active');
@@ -448,10 +369,11 @@
             });
             const activePage = document.getElementById(pageId + '-page');
             activePage.style.display = 'block';
-            setTimeout(() => activePage.classList.add('active'), 10);
+            setTimeout(() => activePage.classList.add('active'), 50);
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        // PRICE SYNC
         async function fetchPrices() {
             try {
                 const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,solana&vs_currencies=eur');
@@ -461,11 +383,12 @@
                     const price = data[name].eur.toLocaleString('en-EU', {style: 'currency', currency: 'EUR'});
                     document.querySelectorAll(`.price-${id}`).forEach(el => el.innerText = `${id.toUpperCase()}: ${price}`);
                 }
-            } catch (e) { console.error("Price Sync Offline"); }
+            } catch (e) { console.warn("Price API throttled."); }
         }
-        setInterval(fetchPrices, 30000);
+        setInterval(fetchPrices, 60000);
         fetchPrices();
 
+        // THEME TOGGLE
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
@@ -474,15 +397,14 @@
             icon.classList.toggle('fa-sun');
         });
 
+        // CALC ENGINE
         const routeFees = {
-            'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|paysafe': 0.10, 'paypal|skrill': 0.10, 'paypal|revolut': 0.05, 'paypal|bank': 0.05, 'paypal|paypal': 0.05,
-            'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|paysafe': 0.10, 'tikkie|skrill': 0.10, 'tikkie|revolut': 0.05, 'tikkie|bank': 0.05, 'tikkie|tikkie': 0.05,
-            'crypto|paypal': 0.02, 'crypto|tikkie': 0.02, 'crypto|bank': 0.02, 'crypto|revolut': 0.02, 'crypto|paysafe': 0.02, 'crypto|skrill': 0.02, 'crypto|crypto': 0.02,
-            'bank|paypal': 0.05, 'bank|crypto': 0.07, 'bank|tikkie': 0.05, 'bank|revolut': 0.05, 'bank|paysafe': 0.10, 'bank|skrill': 0.10, 'bank|bank': 0.10,
-            'skrill|paypal': 0.10, 'skrill|crypto': 0.10, 'skrill|tikkie': 0.10, 'skrill|revolut': 0.10, 'skrill|bank': 0.10, 'skrill|paysafe': 0.10, 'skrill|skrill': 0.10,
-            'paysafe|paypal': 0.10, 'paysafe|crypto': 0.10, 'paysafe|tikkie': 0.10, 'paysafe|revolut': 0.10, 'paysafe|skrill': 0.10, 'paysafe|bank': 0.10, 'paysafe|paysafe': 0.10,
-            'revolut|paypal': 0.05, 'revolut|crypto': 0.07, 'revolut|tikkie': 0.05, 'revolut|skrill': 0.10, 'revolut|paysafe': 0.10, 'revolut|bank': 0.05, 'revolut|revolut': 0.05,
+            'paypal|crypto': 0.07, 'paypal|tikkie': 0.05, 'paypal|bank': 0.05,
+            'crypto|paypal': 0.02, 'crypto|tikkie': 0.02, 'crypto|bank': 0.02,
+            'tikkie|crypto': 0.07, 'tikkie|paypal': 0.05, 'tikkie|bank': 0.05,
+            'bank|crypto': 0.07, 'bank|paypal': 0.05, 'bank|tikkie': 0.05,
         };
+        const DEFAULT_FEE = 0.10;
         const MIN_FEE = 0.50;
 
         function updateExchange() {
@@ -490,10 +412,17 @@
             const sendMethod = document.getElementById('sendMethod').value;
             const receiveMethod = document.getElementById('receiveMethod').value;
             const routeKey = `${sendMethod}|${receiveMethod}`;
-            const feePercent = routeFees[routeKey] || 0.10;
-            let calculatedFee = sendAmt * feePercent;
+            const feePercent = routeFees[routeKey] || DEFAULT_FEE;
             
-            if (sendMethod !== 'crypto') { calculatedFee = Math.max(calculatedFee, MIN_FEE); }
+            let calculatedFee = sendAmt * feePercent;
+            if (sendMethod !== 'crypto') {
+                if (calculatedFee < MIN_FEE && sendAmt > 0) {
+                    calculatedFee = MIN_FEE;
+                    document.getElementById('min-fee-alert').classList.remove('hidden');
+                } else {
+                    document.getElementById('min-fee-alert').classList.add('hidden');
+                }
+            }
             
             const receiveAmt = Math.max(sendAmt - calculatedFee, 0);
             document.getElementById('receiveAmount').value = `€ ${receiveAmt.toFixed(2)}`;
@@ -504,14 +433,11 @@
         document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', updateExchange));
         updateExchange();
 
+        // PARTICLE ENGINE
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
@@ -519,50 +445,46 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = 'rgba(237, 66, 69, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = 'rgba(237, 66, 69, 0.3)';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
-        function initParticles() {
-            for (let i = 0; i < 60; i++) particles.push(new Particle());
-        }
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
-        initParticles();
         animate();
 
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const content = item.querySelector('.faq-content');
-                const arrow = item.querySelector('.arrow-icon');
-                if (item.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    content.style.maxHeight = '0px';
-                    arrow.style.transform = 'rotate(0deg)';
-                }
-            });
-        });
+        // TRUST NOTIFICATION LOGIC
+        const swapPhrases = [
+            "Someone swapped €50 -> BTC",
+            "Someone swapped €120 -> LTC",
+            "Someone swapped €300 -> Revolut",
+            "Someone swapped €15 -> SOL",
+            "Ticket #4829 completed successfully",
+            "Someone swapped €25 -> Tikkie"
+        ];
+        function showTrustToast() {
+            const toast = document.getElementById('trust-toast');
+            const text = document.getElementById('trust-text');
+            text.innerText = swapPhrases[Math.floor(Math.random() * swapPhrases.length)];
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+        setInterval(showTrustToast, 12000);
+        setTimeout(showTrustToast, 3000);
     </script>
 </body>
 </html>
